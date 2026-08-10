@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co; frame-ancestors 'self';">
+<title>Track My Job — Application Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --bg: #FFFFFF;
+    --surface: #F4F5F8;
+    --surface-2: #FFFFFF;
+    --surface-3: #EBEDF3;
+    --line: #E3E6EE;
+    --avatar-img: url("data:image/jpeg;base64,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");
+    --cyan: #14B8A6;
+    --purple: #8B5CF6;
+    --amber: #B45309;
+    --green: #16A34A;
+    --red: #E11D48;
+    --text: #12151C;
+    --muted: #5B6472;
+    --muted-2: #8A93A3;
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; overflow-x:hidden; max-width:100vw;}
+  body{
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(139,92,246,0.06), transparent 45%),
+      radial-gradient(circle at 85% 8%, rgba(20,184,166,0.05), transparent 40%);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection{ background: var(--purple); color: white; }
+  h1,h2,h3,.display{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em; }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+
+  /* ---------- Header ---------- */
+  header{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    padding: 4px 24px;
+    border-bottom: 1px solid var(--line);
+    position: sticky; top:0; z-index: 40;
+    background: #FFFFFF;
+    box-shadow: 0 2px 14px rgba(18,21,28,0.05);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{
+    width:82px; height:82px; border-radius:50%;
+    background-image: var(--avatar-img);
+    background-size: cover;
+    background-position: center center;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    background-color: #000000;
+    border: 3px solid #000000;
+  }
+  .brand h1{ font-size:19px; margin:0; font-weight:800; color:#0B0E14; font-family:'Space Grotesk',sans-serif; }
+  .brand span{ display:block; font-size:11px; color:#5B6470; font-weight:500; font-family:'Inter',sans-serif; letter-spacing:0.02em;}
+  .add-btn{
+    display:flex; align-items:center; gap:8px;
+    background: linear-gradient(135deg, var(--cyan), #2bb9a3);
+    color:#06110F; border:none; padding:10px 18px; border-radius:10px;
+    font-weight:600; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif;
+    transition: transform .15s ease, box-shadow .15s ease;
+    box-shadow: 0 0 0 rgba(20,184,166,0);
+  }
+  .add-btn:hover{ transform: translateY(-1px); box-shadow: 0 6px 20px rgba(20,184,166,0.25); }
+  .add-btn:active{ transform: translateY(0); }
+
+  .portfolio-btn{
+    display:flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap;
+    text-align:center; line-height:1.3;
+    background: linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B);
+    background-size: 200% 200%;
+    color:#FFFFFF; text-decoration:none; padding:8px 16px; border-radius:10px;
+    font-weight:700; font-size:13px; font-family:'Inter',sans-serif;
+    transition: transform .15s ease, box-shadow .15s ease, background-position .4s ease;
+    box-shadow: 0 4px 14px rgba(139,92,246,0.3);
+  }
+  .portfolio-btn:hover{ transform: translateY(-1px); box-shadow: 0 8px 24px rgba(236,72,153,0.4); background-position: 100% 50%; }
+  .portfolio-btn:active{ transform: translateY(0); }
+
+  /* ---------- Toolbar ---------- */
+  .toolbar{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    padding: 16px 24px; border-bottom:1px solid var(--line);
+  }
+  .search-wrap{ position:relative; flex:1; min-width:200px; }
+  .search-wrap input{
+    width:100%; background: var(--surface); border:1px solid var(--line);
+    border-radius:10px; padding:10px 14px 10px 36px; color:var(--text);
+    font-family:'Inter',sans-serif; font-size:14px; outline:none;
+    transition: border-color .15s ease;
+  }
+  .search-wrap input:focus{ border-color: var(--cyan); }
+  .search-wrap svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); opacity:0.5; }
+  select.filter{
+    background: var(--surface); border:1px solid var(--line); color:var(--text);
+    border-radius:10px; padding:10px 12px; font-family:'Inter',sans-serif; font-size:14px;
+    outline:none; cursor:pointer;
+  }
+  .stat-chip{
+    background: var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:8px 14px; font-size:13px; color:var(--muted); display:flex; gap:6px; align-items:baseline;
+  }
+  .stat-chip b{ color:var(--text); font-family:'JetBrains Mono',monospace; font-size:15px; }
+  .mt-item{
+    padding:12px 14px; border-radius:9px; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif;
+    display:flex; align-items:center; gap:10px; border:1px solid var(--line); font-weight:600;
+  }
+  .mt-item:hover{ background:var(--surface-2); }
+
+  /* ---------- Auth Screen ---------- */
+  #authScreen{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background: #FFFFFF;
+    background-image: radial-gradient(circle at 20% 10%, rgba(139,92,246,0.08), transparent 45%),
+                       radial-gradient(circle at 85% 90%, rgba(20,184,166,0.08), transparent 45%);
+    padding:20px;
+  }
+  .auth-card{
+    width:100%; max-width:380px; background:#FFFFFF; border:1px solid var(--line);
+    border-radius:18px; padding:32px 28px; box-shadow:0 20px 50px rgba(15,20,35,0.1);
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  .auth-avatar{
+    width:76px; height:76px; border-radius:50%;
+    background-image: var(--avatar-img); background-size:cover; background-position:center;
+    border:3px solid #0B0E14; margin-bottom:2px;
+  }
+  .auth-title{ font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:800; margin:0; text-align:center; }
+  .auth-sub{ font-size:12.5px; color:var(--muted); margin:0 0 6px; text-align:center; }
+  .auth-tabs{ display:flex; width:100%; background:var(--surface-3); border-radius:10px; padding:4px; gap:4px; }
+  .auth-tab{
+    flex:1; text-align:center; padding:8px; border-radius:8px; font-size:13px; font-weight:600;
+    cursor:pointer; color:var(--muted);
+  }
+  .auth-tab.active{ background:#FFFFFF; color:#0B0E14; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+  #authScreen .field{ width:100%; }
+  #authScreen input{
+    width:100%; background:var(--surface-2); border:1px solid var(--line); border-radius:9px;
+    padding:10px 12px; font-family:'Inter',sans-serif; font-size:14px; outline:none; box-sizing:border-box;
+  }
+  #authScreen input:focus{ border-color:var(--cyan); }
+  .auth-error{ color:#E11D48; font-size:12.5px; text-align:center; min-height:14px; }
+  .auth-footer{ font-size:12.5px; color:var(--muted); text-align:center; }
+  .auth-footer span{ color:#0369A1; font-weight:600; cursor:pointer; }
+
+  /* ---------- Pipeline rail ---------- */
+  .cloud-banner{
+    margin: 12px 24px 0; padding:10px 14px; border-radius:10px; font-size:12.5px;
+    display:none; align-items:center; gap:8px; font-family:'Inter',sans-serif;
+  }
+  .cloud-banner.show{ display:flex; }
+  .cloud-banner.warn{ background:#FEF3C7; color:#92400E; border:1px solid #FDE68A; }
+  .cloud-banner.ok{ background:#DCFCE7; color:#166534; border:1px solid #BBF7D0; }
+  .rail-wrap{ padding: 20px 24px 4px; overflow-x:auto; }
+  .rail{
+    display:flex; align-items:center; min-width:640px; position:relative;
+  }
+  .rail::before{
+    content:''; position:absolute; left:20px; right:20px; top:15px; height:3px;
+    background: #22C55E;
+    border-radius:4px;
+    box-shadow: 0 0 10px rgba(34,197,94,0.5);
+  }
+  .rail-node{ flex:1; display:flex; flex-direction:column; align-items:center; gap:8px; position:relative; z-index:1;}
+  .rail-dot{
+    width:32px; height:32px; border-radius:50%; background:#000000;
+    border:2px solid #000000; display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; color:#9CA8BC;
+    transition: border-color .2s ease, color .2s ease;
+  }
+  .rail-node.active .rail-dot{ border-color: #22C55E; color:#4ADE80; box-shadow:0 0 14px rgba(34,197,94,0.5); }
+  .rail-label{ font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em; }
+
+  /* ---------- Board ---------- */
+  .board{
+    display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:14px; padding: 18px 24px 40px;
+  }
+  .column{
+    background: var(--surface); border:1px solid #C7CCD8; border-radius: var(--radius);
+    min-width:0; display:flex; flex-direction:column; max-height: calc(100vh - 230px);
+    overflow:hidden;
+  }
+  .column-head{
+    padding:16px 14px 12px; display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--line);
+  }
+  .column-title{ display:flex; align-items:center; gap:8px; font-size:19px; font-weight:800; font-family:'Space Grotesk',sans-serif; }
+  .dot{ width:8px; height:8px; border-radius:50%; }
+  .count{
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted);
+    background: var(--surface-2); padding:2px 8px; border-radius:20px;
+  }
+  .card-list{ padding:10px; display:flex; flex-direction:column; gap:10px; overflow-y:auto; }
+  .card{
+    background: linear-gradient(155deg, #131826 0%, #1B2236 55%, #10141F 100%);
+    border:1px solid #232B42; border-radius:12px;
+    padding:12px; cursor:grab; transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+    width:100%; max-width:130px; aspect-ratio: 1 / 1; display:flex; flex-direction:column; justify-content:space-between;
+    overflow:hidden; border-left-width:4px; box-shadow: 0 8px 20px rgba(15,20,35,0.28);
+    position:relative;
+  }
+  .card::after{
+    content:''; position:absolute; inset:0; border-radius:12px; pointer-events:none;
+    background: radial-gradient(circle at 85% 10%, rgba(56,225,198,0.10), transparent 55%);
+  }
+  .card:hover{ border-color:#37415A; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(15,20,35,0.4); }
+  .card .card-company{ color:#FFFFFF; }
+  .card .card-role{ color:#9AA6BC; }
+  .card .tag{ background:#1C1C1C; color:#D6DCE6; }
+  .card .card-footer{ color:#8A93A3; }
+  .card .stale{ color:#F59E0B !important; }
+  .card.dragging{ opacity:0.4; }
+  .card-company{ font-weight:600; font-size:14px; margin-bottom:2px; }
+  .card-role{ font-size:12.5px; color:var(--muted); margin-bottom:8px; }
+  .card-meta{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+  .tag{
+    font-size:10.5px; padding:3px 8px; border-radius:20px; font-family:'JetBrains Mono',monospace;
+    background: var(--surface-3); color:var(--muted);
+  }
+  .card-footer{ display:flex; align-items:center; justify-content:space-between; font-size:11px; color:var(--muted-2); }
+  .stale{ color: var(--amber) !important; }
+
+  .empty-col{
+    padding:26px 14px; text-align:center; color:var(--muted-2); font-size:12.5px; line-height:1.5;
+  }
+
+  /* ---------- Modal ---------- */
+  .overlay{
+    position:fixed; inset:0; background: rgba(6,8,12,0.65); backdrop-filter: blur(3px);
+    display:none; align-items:center; justify-content:center; z-index:100; padding:16px;
+  }
+  .overlay.show{ display:flex; }
+  .modal{
+    background: var(--surface); border:1px solid var(--line); border-radius:16px;
+    width:100%; max-width:480px; max-height:88vh; overflow-y:auto;
+    animation: pop .18s ease;
+  }
+  @keyframes pop{ from{ opacity:0; transform: scale(0.97) translateY(6px);} to{opacity:1; transform:scale(1) translateY(0);} }
+  .modal-head{ padding:18px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; }
+  .modal-head h3{ margin:0; font-size:16px; }
+  .close-btn{ background:none; border:none; color:var(--muted); font-size:20px; cursor:pointer; line-height:1; padding:4px;}
+  .close-btn:hover{ color:var(--text); }
+  .modal-body{ padding:20px; display:flex; flex-direction:column; gap:14px; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-size:12px; color:var(--muted); font-weight:500; }
+  .field input, .field select, .field textarea{
+    background: var(--surface-2); border:1px solid var(--line); border-radius:9px;
+    padding:10px 12px; color:var(--text); font-family:'Inter',sans-serif; font-size:14px; outline:none;
+    transition: border-color .15s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--cyan); }
+  .field textarea{ resize:vertical; min-height:60px; }
+  .jd-match-box{
+    background: linear-gradient(180deg, #F0FDFA, #FFFFFF); border:1px solid #99F6E4; border-radius:12px;
+    padding:14px; display:flex; flex-direction:column; gap:10px;
+  }
+  .jd-match-head{ font-size:13px; font-weight:700; color:#0F766E; font-family:'Space Grotesk',sans-serif; }
+  .collapsible-toggle{ display:flex; align-items:center; justify-content:space-between; cursor:pointer; user-select:none; }
+  .chevron{ font-size:11px; transition: transform .18s ease; color:inherit; opacity:0.7; }
+  .chevron.open{ transform: rotate(90deg); }
+  .collapsible-body{ display:none; flex-direction:column; gap:10px; margin-top:10px; }
+  .collapsible-body.open{ display:flex; }
+  .jd-match-box textarea{
+    min-height:70px; background:#FFFFFF; border:1px solid var(--line); border-radius:9px;
+    padding:10px 12px; font-family:'Inter',sans-serif; font-size:13px; outline:none; resize:vertical;
+  }
+  .jd-match-box textarea:focus{ border-color:var(--cyan); }
+  .jd-match-box input[type="text"]{
+    background:#FFFFFF; border:1px solid var(--line); border-radius:9px;
+    padding:10px 12px; font-family:'Inter',sans-serif; font-size:13px; outline:none;
+  }
+  .jd-match-box input[type="text"]:focus{ border-color:#EA580C; }
+  #msgOutput{
+    min-height:140px; background:#FFFFFF; border:1px solid var(--line); border-radius:9px;
+    padding:12px; font-family:'Inter',sans-serif; font-size:13px; line-height:1.5; outline:none; resize:vertical;
+  }
+  #msgOutput:focus{ border-color:#C026D3; }
+
+  .insight-stats{ display:grid; grid-template-columns: repeat(2,1fr); gap:10px; margin-bottom:6px; }
+  .insight-stat{ background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .insight-stat .num{ font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:24px; }
+  .insight-stat .lbl{ font-size:11.5px; color:var(--muted); margin-top:2px; }
+  .insight-section-title{ font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em; margin:14px 0 8px; }
+  .chart-wrap{ display:flex; align-items:flex-end; gap:6px; height:110px; padding:0 4px; }
+  .chart-bar-col{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:4px; }
+  .chart-bar{ width:100%; max-width:26px; background:linear-gradient(180deg,var(--cyan),#0D9488); border-radius:4px 4px 0 0; min-height:2px; }
+  .chart-label{ font-size:9.5px; color:var(--muted); font-family:'JetBrains Mono',monospace; }
+  .source-row{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .source-name{ width:90px; font-size:12.5px; flex-shrink:0; }
+  .source-bar-track{ flex:1; height:10px; background:var(--surface-3); border-radius:6px; overflow:hidden; }
+  .source-bar-fill{ height:100%; background:linear-gradient(90deg,#7C3AED,#22D3EE); border-radius:6px; }
+  .source-count{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted); width:34px; text-align:right; flex-shrink:0; }
+  .stale-item{ background:#FFFBEB; border:1px solid #FDE68A; border-radius:8px; padding:9px 12px; font-size:12.5px; margin-bottom:6px; display:flex; justify-content:space-between; }
+  .empty-insight{ color:var(--muted-2); font-size:12.5px; text-align:center; padding:16px 0; }
+
+  .offer-table{ display:grid; gap:0; min-width:520px; }
+  .offer-row{ display:grid; grid-template-columns: 110px repeat(var(--offer-count,2), 1fr); border-bottom:1px solid var(--line); }
+  .offer-row:last-child{ border-bottom:none; }
+  .offer-cell{ padding:10px 12px; font-size:12.5px; display:flex; align-items:center; }
+  .offer-cell.label{ font-weight:700; color:var(--muted); font-size:11.5px; text-transform:uppercase; letter-spacing:0.02em; background:var(--surface-2); }
+  .offer-cell.header{ font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:14px; background:var(--surface-2); }
+  .offer-best{ color:#16A34A; font-weight:700; }
+
+  .cat-tab{
+    font-size:11.5px; padding:6px 12px; border-radius:20px; border:1px solid var(--line);
+    background:#FFFFFF; color:var(--muted); cursor:pointer; font-family:'Inter',sans-serif; font-weight:600;
+  }
+  .cat-tab.active{ background:#0B0E14; color:#FFFFFF; border-color:#0B0E14; }
+  .company-row{
+    display:flex; align-items:center; gap:10px; padding:9px 12px; border:1px solid var(--line);
+    border-radius:9px; background:#FFFFFF;
+  }
+  .company-row .cname{ flex:1; font-size:13px; font-weight:600; }
+  .company-row .ccat{ font-size:10px; color:var(--muted); font-family:'JetBrains Mono',monospace; }
+  .company-row a.visit{ font-size:11.5px; color:#0369A1; text-decoration:none; font-weight:600; white-space:nowrap; }
+  .company-row .addbtn{
+    font-size:11px; padding:5px 10px; border-radius:7px; border:none; cursor:pointer;
+    background:#0B0E14; color:#FFFFFF; font-weight:600; white-space:nowrap;
+  }
+  .company-row .addbtn:disabled{ background:#D1D5DB; cursor:default; }
+  .bulk-add-btn{
+    font-size:12px; padding:8px 14px; border-radius:9px; border:none; cursor:pointer;
+    background:linear-gradient(135deg,var(--cyan),#0D9488); color:#06110F; font-weight:700; width:100%;
+  }
+  .match-score-ring{ display:flex; align-items:center; gap:12px; margin-top:2px; }
+  .match-score-num{ font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:28px; }
+  .match-score-label{ font-size:12px; color:var(--muted); }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+  .skill-tag{ font-size:11px; padding:4px 10px; border-radius:20px; font-family:'JetBrains Mono',monospace; font-weight:600; }
+  .skill-tag.matched{ background:#DCFCE7; color:#166534; }
+  .skill-tag.missing{ background:#FEF3C7; color:#92400E; }
+  .jd-section-title{ font-size:11.5px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em; margin:4px 0 -2px; }
+  .prep-question{ background:#FFFFFF; border:1px solid var(--line); border-radius:8px; padding:9px 12px; font-size:12.5px; color:var(--text); }
+  .project-tip{ background:#EFF6FF; border:1px solid #BFDBFE; border-radius:8px; padding:9px 12px; font-size:12px; color:#1E40AF; }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .modal-footer{ padding:16px 20px; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:10px; }
+  .btn{ padding:10px 18px; border-radius:9px; font-size:14px; font-weight:600; cursor:pointer; border:none; font-family:'Inter',sans-serif; }
+  .btn-primary{ background: linear-gradient(135deg, var(--cyan), #2bb9a3); color:#06110F; }
+  .btn-ghost{ background:transparent; color:var(--muted); border:1px solid var(--line); }
+  .btn-ghost:hover{ color:var(--text); border-color:#C7CCD8; }
+  .btn-danger{ background:transparent; color:var(--red); border:1px solid rgba(225,29,72,0.3); }
+  .btn-danger:hover{ background: rgba(225,29,72,0.08); }
+
+  @media (max-width: 900px){
+    .board{ grid-template-columns: repeat(2, 190px); }
+  }
+  @media (max-width: 560px){
+    .board{ grid-template-columns: 1fr; justify-content:stretch; }
+  }
+  @media (max-width: 640px){
+    header{ padding:8px 16px; }
+    .toolbar{ padding:12px 16px; }
+    .rail-wrap, .board{ padding-left:16px; padding-right:16px; }
+    .row2{ grid-template-columns:1fr; }
+    .brand span{ display:none; }
+    .portfolio-btn, .add-btn{ padding:8px 12px; font-size:11.5px; }
+    .brand-mark{ width:56px; height:56px; }
+    .brand{ gap:8px; }
+    .brand h1{ font-size:15px; }
+    header{ padding-top:6px; padding-bottom:6px; flex-wrap:nowrap; gap:8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== AUTH SCREEN (shown before login) ===== -->
+<div id="authScreen">
+  <div class="auth-card">
+    <div class="auth-avatar" id="authAvatar"></div>
+    <h1 class="auth-title">Welcome To "Track My Job"</h1>
+    <p class="auth-sub" id="authModeSub">Login to see your saved applications</p>
+
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tabLogin" onclick="setAuthMode('login')">Login</div>
+      <div class="auth-tab" id="tabSignup" onclick="setAuthMode('signup')">Sign Up</div>
+    </div>
+
+    <div class="field" id="fullNameField" style="display:none;">
+      <label>Full Name</label>
+      <input type="text" id="authFullName" placeholder="Your name">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="authEmail" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="authPassword" placeholder="At least 6 characters">
+    </div>
+
+    <div id="authError" class="auth-error"></div>
+
+    <button class="btn btn-primary" id="authSubmitBtn" style="width:100%; padding:12px;" onclick="submitAuth()">Login</button>
+    <div class="auth-footer" id="authFooter">New here? <span onclick="setAuthMode('signup')">Create an account</span></div>
+  </div>
+</div>
+
+<div id="appContent" style="display:none;">
+
+<header>
+  <div class="brand">
+    <div class="brand-mark" id="avatarCircle"></div>
+    <div>
+      <h1>Track My Job</h1>
+      <span>Sunny's Job Search Command Center</span>
+    </div>
+  </div>
+  <div style="display:flex; gap:10px; align-items:center;">
+    <a href="https://imysunny.github.io" target="_blank" rel="noopener noreferrer" class="portfolio-btn">
+      🌟 Know About Admin
+    </a>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="Search company or role..." oninput="render()">
+  </div>
+  <button class="add-btn" onclick="openModal()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    Add Application
+  </button>
+  <select class="filter" id="sourceFilter" onchange="render()">
+    <option value="">All sources</option>
+    <option value="LinkedIn">LinkedIn</option>
+    <option value="Naukri">Naukri</option>
+    <option value="Company Site">Company Site</option>
+    <option value="Referral">Referral</option>
+    <option value="Other">Other</option>
+  </select>
+  <div class="stat-chip">Total <b id="totalCount">0</b></div>
+  <span id="responseRate" style="display:none;">0%</span>
+  <button class="btn btn-ghost" onclick="openInsights()">📊 Insights</button>
+  <button class="btn btn-ghost" onclick="openResumes()">📄 Resumes</button>
+  <button class="btn btn-ghost" onclick="openOffers()">⚖️ Compare Offers</button>
+
+  <button class="btn" id="moreToolsBtn" onclick="openMoreTools()" title="More Tools" style="background:#0B0E14; color:#FFFFFF; border:1px solid #0B0E14;">⚙️</button>
+</div>
+
+<div class="cloud-banner" id="cloudBanner"></div>
+
+<div class="rail-wrap">
+  <div class="rail" id="rail"></div>
+</div>
+
+<div class="board" id="board"></div>
+
+<!-- Modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">Add Application</h3>
+      <button class="close-btn" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Company *</label>
+        <input type="text" id="f_company" placeholder="e.g. Deloitte">
+      </div>
+      <div class="field">
+        <label>Role *</label>
+        <input type="text" id="f_role" placeholder="e.g. Data Analyst">
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Location</label>
+          <input type="text" id="f_location" placeholder="e.g. Remote / Bangalore">
+        </div>
+        <div class="field">
+          <label>Salary range</label>
+          <input type="text" id="f_salary" placeholder="e.g. 5-7 LPA">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Source</label>
+          <select id="f_source">
+            <option>LinkedIn</option>
+            <option>Naukri</option>
+            <option>Company Site</option>
+            <option>Referral</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Date applied</label>
+          <input type="date" id="f_date">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Recruiter name</label>
+          <input type="text" id="f_recname" placeholder="e.g. Priya (optional)">
+        </div>
+        <div class="field">
+          <label>Recruiter email/LinkedIn</label>
+          <input type="text" id="f_reccontact" placeholder="optional">
+        </div>
+      </div>
+
+      <div class="jd-match-box" style="background:linear-gradient(180deg,#FFF7ED,#FFFFFF); border-color:#FED7AA;">
+        <div class="jd-match-head" style="color:#C2410C;">📄 Resume Version Used</div>
+        <input type="text" id="f_resume" list="resumeVersionList" placeholder="e.g. Resume_v2_DataAnalyst.pdf">
+        <datalist id="resumeVersionList"></datalist>
+      </div>
+
+      <div class="jd-match-box" style="background:linear-gradient(180deg,#F0F9FF,#FFFFFF); border-color:#BAE6FD;">
+        <div class="jd-match-head collapsible-toggle" style="color:#0369A1;" onclick="toggleSection('companyNotesBody','companyNotesChevron')">
+          <span>🏢 Company Research Notes</span>
+          <span id="companyNotesChevron" class="chevron">▸</span>
+        </div>
+        <div id="companyNotesBody" class="collapsible-body">
+          <textarea id="f_companynotes" placeholder="Culture, recent news, glassdoor reviews, interview experiences you've read, anything worth remembering about this company..."></textarea>
+        </div>
+      </div>
+
+      <div class="jd-match-box">
+        <div class="jd-match-head collapsible-toggle" onclick="toggleSection('jdBody','jdChevron')">
+          <span>🎯 JD Match Score &amp; Interview Prep</span>
+          <span id="jdChevron" class="chevron">▸</span>
+        </div>
+        <div id="jdBody" class="collapsible-body">
+          <textarea id="f_jdtext" placeholder="Job description yaha paste karo — apna skill match % aur relevant interview questions turant milenge"></textarea>
+          <button type="button" class="btn btn-ghost" style="width:100%" onclick="analyzeJD()">Analyze Match</button>
+          <div id="jdResult"></div>
+        </div>
+      </div>
+
+      <div class="jd-match-box" style="background:linear-gradient(180deg,#FDF4FF,#FFFFFF); border-color:#F5D0FE;">
+        <div class="jd-match-head collapsible-toggle" style="color:#A21CAF;" onclick="toggleSection('msgBody','msgChevron')">
+          <span>✉️ Message Generator</span>
+          <span id="msgChevron" class="chevron">▸</span>
+        </div>
+        <div id="msgBody" class="collapsible-body">
+          <select id="f_msgtype" style="background:#FFFFFF; border:1px solid var(--line); border-radius:9px; padding:10px 12px; font-family:'Inter',sans-serif; font-size:13px;">
+            <option value="cold">Cold application / outreach</option>
+            <option value="followup">Follow-up (no reply yet)</option>
+            <option value="thankyou">Thank-you note (after interview)</option>
+          </select>
+          <button type="button" class="btn btn-ghost" style="width:100%" onclick="generateMessage()">Generate Message</button>
+          <textarea id="msgOutput" style="min-height:140px; display:none;"></textarea>
+          <button type="button" class="btn btn-primary" id="copyMsgBtn" style="display:none;" onclick="copyMessage()">Copy Message</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Job description link</label>
+        <input type="text" id="f_jd" placeholder="https://...">
+      </div>
+
+      <div class="field">
+        <label>Stage</label>
+        <select id="f_stage">
+          <option value="saved">Saved</option>
+          <option value="applied">Applied</option>
+          <option value="screening">Screening</option>
+          <option value="interview">Interview</option>
+          <option value="offer">Offer</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Notes</label>
+        <textarea id="f_notes" placeholder="Recruiter name, interview notes, anything to remember..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="deleteBtn" style="display:none" onclick="deleteCurrent()">Delete</button>
+      <div style="flex:1"></div>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCard()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Insights Modal -->
+<div class="overlay" id="insightsOverlay">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-head">
+      <h3>📊 Insights</h3>
+      <button class="close-btn" onclick="closeInsights()">×</button>
+    </div>
+    <div class="modal-body" id="insightsBody">
+    </div>
+  </div>
+</div>
+
+<!-- Resumes Modal -->
+<div class="overlay" id="resumesOverlay">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-head">
+      <h3>📄 Resume Versions</h3>
+      <button class="close-btn" onclick="closeResumes()">×</button>
+    </div>
+    <div class="modal-body" id="resumesBody">
+    </div>
+  </div>
+</div>
+
+<!-- Offer Comparison Modal -->
+<div class="overlay" id="offersOverlay">
+  <div class="modal" style="max-width:720px;">
+    <div class="modal-head">
+      <h3>⚖️ Compare Offers</h3>
+      <button class="close-btn" onclick="closeOffers()">×</button>
+    </div>
+    <div class="modal-body" id="offersBody" style="overflow-x:auto;">
+    </div>
+  </div>
+</div>
+
+<!-- More Tools Modal -->
+<div class="overlay" id="moreToolsOverlay">
+  <div class="modal" style="max-width:360px;">
+    <div class="modal-head">
+      <h3>⚙️ More Tools</h3>
+      <button class="close-btn" onclick="closeMoreTools()">×</button>
+    </div>
+    <div class="modal-body" style="gap:6px;">
+      <div class="mt-item" onclick="closeMoreTools(); openJobPortals();">🔗 Job Portals</div>
+      <div class="mt-item" onclick="closeMoreTools(); openCompanies();">🏢 Companies</div>
+      <div class="mt-item" onclick="closeMoreTools(); exportCSV();">⬇️ Export CSV</div>
+      <div class="mt-item" onclick="closeMoreTools(); logoutUser();" style="color:#E11D48;">🚪 Logout</div>
+    </div>
+  </div>
+</div>
+
+<!-- Company Directory Modal -->
+<div class="overlay" id="companiesOverlay">
+  <div class="modal" style="max-width:640px;">
+    <div class="modal-head">
+      <h3>🏢 Company Directory</h3>
+      <button class="close-btn" onclick="closeCompanies()">×</button>
+    </div>
+    <div class="modal-body" style="gap:10px;">
+      <input type="text" id="companySearch" placeholder="Search company..." oninput="renderCompanies()" style="background:var(--surface-2); border:1px solid var(--line); border-radius:9px; padding:10px 12px; font-family:'Inter',sans-serif; font-size:13px; outline:none;">
+      <div id="companyTabs" style="display:flex; flex-wrap:wrap; gap:6px;"></div>
+      <div id="companyBulkAdd"></div>
+      <div id="companyList" style="max-height:360px; overflow-y:auto; display:flex; flex-direction:column; gap:6px;"></div>
+    </div>
+  </div>
+</div>
+
+</div> <!-- /appContent -->
+
+<script>
+// ===== PHASE 3: JD MATCH + INTERVIEW PREP =====
+const SUNNY_SKILLS = ['excel','pivot table','pivot','power query','vlookup','sql','joins','subquery','subqueries',
+  'aggregate','power bi','powerbi','dax','dashboard','python','pandas','numpy','eda','statistics','hypothesis',
+  'probability','data cleaning','null handling','dedup','data viz','data visualization','storytelling','charts',
+  'reports','reporting','ai tools','chatgpt','claude','excel automation','financial data','mutual fund'];
+
+const LEARNING_SKILLS = ['tableau','visual analytics','c language','machine learning','ml','scikit-learn',
+  'regression','deep learning','tensorflow'];
+
+const QUESTION_BANK = {
+  sql: ["SQL mein JOIN ke types samjhao (INNER, LEFT, RIGHT, FULL).",
+        "Subquery aur CTE mein kya farak hai?",
+        "GROUP BY aur HAVING ka use kab karte hai?",
+        "Window functions (RANK, ROW_NUMBER) kab use hote hai?"],
+  excel: ["VLOOKUP aur INDEX-MATCH mein kya farak hai, kaunsa better hai?",
+          "Pivot table se summary kaise banate ho, ek example do.",
+          "Data cleaning ke liye Excel mein kaunse tools use karte ho?"],
+  powerbi: ["DAX kya hai aur ek simple measure ka example do.",
+            "Power BI mein relationships kaise manage karte ho multiple tables ke beech?",
+            "Slicers aur filters mein kya farak hai?"],
+  python: ["Pandas mein missing values kaise handle karte ho?",
+           "groupby() function ka use kab karte ho, example do.",
+           "EDA karte waqt sabse pehle kya dekhte ho kisi dataset mein?"],
+  statistics: ["Mean, median, mode mein kab kaunsa use karna chahiye?",
+               "Hypothesis testing kya hota hai, ek real example do.",
+               "Outliers ko kaise detect aur handle karte ho?"],
+  tableau: ["Tableau mein dashboard banane ka process samjhao.",
+            "Calculated fields kab use karte ho?"],
+  general: ["Apna sabse challenging data project describe karo.",
+            "Data mein galti mil jaye report bhejne ke baad — kya karoge?",
+            "Non-technical stakeholder ko data insight kaise samjhaoge?"]
+};
+
+const PROJECT_TIPS = {
+  'tableau': 'Ek public dataset (Kaggle) lekar Tableau Public par ek chhota sales/HR dashboard banao aur portfolio mein daalo.',
+  'machine learning': 'Scikit-learn se ek simple regression/classification model try karo chhote dataset par (jaise Titanic dataset).',
+  'ml': 'Scikit-learn se ek simple regression/classification model try karo chhote dataset par.',
+  'python': 'Ek chhota EDA project Pandas se karo — kisi CSV ko clean karke 3-4 charts banao.',
+  'power bi': 'Ek dataset par DAX measures ke saath interactive Power BI dashboard banao.',
+  'sql': 'SQL joins aur window functions practice karo — kisi e-commerce dataset par queries likho.'
+};
+
+// ===== PHASE 4: MESSAGE GENERATOR =====
+const MY_NAME = 'Sunny Yadav';
+const MY_PORTFOLIO = 'https://imysunny.github.io';
+const MY_CURRENT_ROLE = 'Operations Assistant at Wealth Creator (mutual fund distribution firm), Prayagraj';
+
+function currentFormValues(){
+  return {
+    company: document.getElementById('f_company').value.trim() || '[Company]',
+    role: document.getElementById('f_role').value.trim() || '[Role]',
+    recname: document.getElementById('f_recname').value.trim(),
+    reccontact: document.getElementById('f_reccontact').value.trim(),
+    date: document.getElementById('f_date').value
+  };
+}
+
+function generateMessage(){
+  const v = currentFormValues();
+  const type = document.getElementById('f_msgtype').value;
+  const greeting = v.recname ? `Hi ${v.recname},` : `Hi,`;
+  const toLine = v.reccontact ? `To: ${v.reccontact}\n\n` : '';
+  let msg = '';
+
+  if(type === 'cold'){
+    msg = `${greeting}
+
+I'm writing to express interest in the ${v.role} position at ${v.company}. I currently work as ${MY_CURRENT_ROLE}, where I handle real financial data daily — cleaning, analyzing, and building reports using Excel, SQL, and Power BI.
+
+I've also built 16 independent data projects covering SQL analysis, Power BI dashboards, and Python EDA, which you can see here: ${MY_PORTFOLIO}
+
+I'd love the opportunity to bring these skills to the ${v.role} role at ${v.company}. Happy to share more details or walk through my work on a call.
+
+Best regards,
+${MY_NAME}`;
+  } else if(type === 'followup'){
+    const appliedOn = v.date ? new Date(v.date).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}) : 'a little while back';
+    msg = `${greeting}
+
+I hope you're doing well. I wanted to follow up on my application for the ${v.role} position at ${v.company}, submitted on ${appliedOn}. I remain very interested in the opportunity and wanted to check if there's any update on the hiring timeline.
+
+Happy to provide any additional information — my portfolio is here if helpful: ${MY_PORTFOLIO}
+
+Thank you for your time.
+
+Best regards,
+${MY_NAME}`;
+  } else {
+    msg = `${greeting}
+
+Thank you so much for taking the time to interview me for the ${v.role} position at ${v.company}. I really enjoyed our conversation and learning more about the team and the role.
+
+Our discussion made me even more excited about the opportunity, and I'm confident my hands-on experience with Excel, SQL, and Power BI would let me contribute from day one.
+
+Please let me know if you need anything further from my side. Looking forward to hearing about the next steps.
+
+Best regards,
+${MY_NAME}`;
+  }
+
+  const out = document.getElementById('msgOutput');
+  out.value = toLine + msg;
+  out.style.display = 'block';
+  document.getElementById('copyMsgBtn').style.display = 'block';
+}
+
+function copyMessage(){
+  const out = document.getElementById('msgOutput');
+  out.select();
+  document.execCommand('copy');
+  const btn = document.getElementById('copyMsgBtn');
+  const prev = btn.textContent;
+  btn.textContent = 'Copied!';
+  setTimeout(()=>{ btn.textContent = prev; }, 1500);
+}
+
+function toggleSection(bodyId, chevronId){
+  document.getElementById(bodyId).classList.toggle('open');
+  document.getElementById(chevronId).classList.toggle('open');
+}
+
+function skillCategory(skill){
+  if(skill.includes('sql') || skill.includes('join') || skill.includes('subquer') || skill.includes('aggregate')) return 'sql';
+  if(skill.includes('excel') || skill.includes('pivot') || skill.includes('vlookup') || skill.includes('power query')) return 'excel';
+  if(skill.includes('power bi') || skill.includes('powerbi') || skill.includes('dax')) return 'powerbi';
+  if(skill.includes('python') || skill.includes('pandas') || skill.includes('numpy') || skill.includes('eda')) return 'python';
+  if(skill.includes('statistic') || skill.includes('hypothesis') || skill.includes('probability')) return 'statistics';
+  if(skill.includes('tableau')) return 'tableau';
+  return null;
+}
+
+function analyzeJD(){
+  const text = document.getElementById('f_jdtext').value.toLowerCase();
+  const resultDiv = document.getElementById('jdResult');
+  if(!text.trim()){ resultDiv.innerHTML = '<div class="jd-section-title" style="color:#B45309">Pehle JD paste karo upar.</div>'; return; }
+
+  const allKnownTerms = [...new Set([...SUNNY_SKILLS, ...LEARNING_SKILLS])];
+  const foundInJD = allKnownTerms.filter(term => text.includes(term));
+  const matched = foundInJD.filter(term => SUNNY_SKILLS.includes(term));
+  const missing = foundInJD.filter(term => !SUNNY_SKILLS.includes(term));
+
+  const score = foundInJD.length ? Math.round((matched.length / foundInJD.length) * 100) : 0;
+  const scoreColor = score>=70 ? '#16A34A' : score>=40 ? '#B45309' : '#E11D48';
+
+  const matchedCats = [...new Set(matched.map(skillCategory).filter(Boolean))];
+  const questionCats = matchedCats.length ? matchedCats : ['general'];
+  let questions = [];
+  questionCats.forEach(c => questions = questions.concat(QUESTION_BANK[c] || []));
+  questions = questions.concat(QUESTION_BANK.general).slice(0,6);
+
+  const uniqueMissing = [...new Set(missing)];
+  const tips = uniqueMissing.map(m => PROJECT_TIPS[m]).filter(Boolean);
+
+  resultDiv.innerHTML = `
+    <div class="match-score-ring">
+      <div class="match-score-num" style="color:${scoreColor}">${foundInJD.length ? score+'%' : '—'}</div>
+      <div class="match-score-label">${foundInJD.length ? 'skill match with your profile' : 'JD mein koi known skill keyword nahi mila'}</div>
+    </div>
+    ${matched.length ? `<div class="jd-section-title">Matched skills</div><div class="skill-tags">${matched.map(s=>`<span class="skill-tag matched">${s}</span>`).join('')}</div>` : ''}
+    ${missing.length ? `<div class="jd-section-title">Missing / gap</div><div class="skill-tags">${missing.map(s=>`<span class="skill-tag missing">${s}</span>`).join('')}</div>` : ''}
+    ${tips.length ? `<div class="jd-section-title">Practice project ideas</div>` + tips.map(t=>`<div class="project-tip">💡 ${t}</div>`).join('') : ''}
+    <div class="jd-section-title">Likely interview questions</div>
+    ${questions.map(q=>`<div class="prep-question">${q}</div>`).join('')}
+  `;
+}
+
+const STAGES = [
+  {key:'saved', label:'Saved', color:'#2563EB'},
+  {key:'applied', label:'Applied', color:'#0D9488'},
+  {key:'screening', label:'Screening', color:'#7C3AED'},
+  {key:'interview', label:'Interview', color:'#B45309'},
+  {key:'offer', label:'Offer', color:'#34D399'},
+  {key:'rejected', label:'Rejected', color:'#F0546B'},
+];
+
+// ===== CLOUD CONFIG =====
+// Yaha apna Supabase Project URL aur anon public key paste karna (setup steps neeche diye hai)
+const SUPABASE_URL = "https://rvlafueiisrunqbwjflc.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_xjw_0kgjPZXnnePGuS2kkQ_1Jz4I9Lg";
+
+let cloudEnabled = SUPABASE_URL.indexOf("PASTE_") !== 0 && SUPABASE_ANON_KEY.indexOf("PASTE_") !== 0;
+let db = null;
+if(cloudEnabled){
+  try{ db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }
+  catch(e){ cloudEnabled = false; }
+}
+
+function showBanner(msg, type){
+  const b = document.getElementById('cloudBanner');
+  b.textContent = msg;
+  b.className = 'cloud-banner show ' + type;
+}
+
+let jobs = [];
+try{
+  jobs = JSON.parse(localStorage.getItem('pipeline_jobs_cache') || '[]');
+}catch(e){
+  console.warn('Local cache read failed, starting fresh:', e);
+  jobs = [];
+}
+let editingId = null;
+let dragId = null;
+
+function cacheLocally(){
+  try{ localStorage.setItem('pipeline_jobs_cache', JSON.stringify(jobs)); }
+  catch(e){ console.warn('Local cache save failed (storage full or disabled):', e); }
+}
+
+function toDb(j){
+  return {
+    company:j.company, role:j.role, location:j.location||null, salary:j.salary||null,
+    source:j.source||null, date_applied:j.date||null, jd_link:j.jd||null,
+    stage:j.stage, notes:j.notes||null,
+    recruiter_name:j.recname||null, recruiter_contact:j.reccontact||null,
+    resume_version:j.resume||null, company_notes:j.companynotes||null,
+    user_id: currentUser ? currentUser.id : null
+  };
+}
+function fromDb(r){
+  return { id:r.id, company:r.company, role:r.role, location:r.location, salary:r.salary,
+    source:r.source, date:r.date_applied, jd:r.jd_link, stage:r.stage, notes:r.notes,
+    recname:r.recruiter_name, reccontact:r.recruiter_contact,
+    resume:r.resume_version, companynotes:r.company_notes,
+    createdAt:r.created_at };
+}
+
+async function loadJobs(){
+  if(!cloudEnabled){
+    showBanner('Cloud connect nahi hai — data sirf isi browser mein save ho raha hai (Phase 2 setup baaki hai).', 'warn');
+    render();
+    return;
+  }
+  try{
+    const { data, error } = await db.from('jobs').select('*').order('created_at', {ascending:true});
+    if(error) throw error;
+    jobs = data.map(fromDb);
+    cacheLocally();
+    document.getElementById('cloudBanner').classList.remove('show');
+  }catch(e){
+    console.warn('Cloud load failed, showing offline cache:', e?.message || e);
+    jobs = JSON.parse(localStorage.getItem('pipeline_jobs_cache') || '[]');
+    showBanner('Cloud se connect nahi ho paya: ' + (e?.message || 'unknown error') + ' — offline cache dikha rahe hai.', 'warn');
+  }
+  render();
+}
+
+function daysAgo(dateStr){
+  if(!dateStr) return null;
+  const d = new Date(dateStr);
+  const diff = Math.floor((new Date() - d) / (1000*60*60*24));
+  return diff;
+}
+
+function openModal(job){
+  editingId = job ? job.id : null;
+  document.getElementById('modalTitle').textContent = job ? 'Edit Application' : 'Add Application';
+  document.getElementById('deleteBtn').style.display = job ? 'block' : 'none';
+  document.getElementById('f_company').value = job ? job.company : '';
+  document.getElementById('f_role').value = job ? job.role : '';
+  document.getElementById('f_location').value = job ? job.location||'' : '';
+  document.getElementById('f_salary').value = job ? job.salary||'' : '';
+  document.getElementById('f_source').value = job ? job.source : 'LinkedIn';
+  document.getElementById('f_date').value = job ? job.date||'' : new Date().toISOString().slice(0,10);
+  document.getElementById('f_jd').value = job ? job.jd||'' : '';
+  document.getElementById('f_stage').value = job ? job.stage : 'saved';
+  document.getElementById('f_notes').value = job ? job.notes||'' : '';
+  document.getElementById('f_recname').value = job ? job.recname||'' : '';
+  document.getElementById('f_reccontact').value = job ? job.reccontact||'' : '';
+  document.getElementById('f_resume').value = job ? job.resume||'' : '';
+  const resumeList = [...new Set(jobs.map(j=>j.resume).filter(Boolean))];
+  document.getElementById('resumeVersionList').innerHTML = resumeList.map(r=>`<option value="${r.replace(/"/g,'&quot;')}">`).join('');
+  document.getElementById('f_companynotes').value = job ? job.companynotes||'' : '';
+  document.getElementById('f_jdtext').value = '';
+  document.getElementById('jdResult').innerHTML = '';
+  document.getElementById('msgOutput').style.display = 'none';
+  document.getElementById('msgOutput').value = '';
+  document.getElementById('copyMsgBtn').style.display = 'none';
+  document.getElementById('jdBody').classList.remove('open');
+  document.getElementById('jdChevron').classList.remove('open');
+  document.getElementById('msgBody').classList.remove('open');
+  document.getElementById('msgChevron').classList.remove('open');
+  document.getElementById('companyNotesBody').classList.remove('open');
+  document.getElementById('companyNotesChevron').classList.remove('open');
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(){ document.getElementById('overlay').classList.remove('show'); editingId=null; }
+
+async function saveCard(){
+  const company = document.getElementById('f_company').value.trim();
+  const role = document.getElementById('f_role').value.trim();
+  if(!company || !role){ alert('Company aur Role dono zaroori hai.'); return; }
+  const data = {
+    company, role,
+    location: document.getElementById('f_location').value.trim(),
+    salary: document.getElementById('f_salary').value.trim(),
+    source: document.getElementById('f_source').value,
+    date: document.getElementById('f_date').value,
+    jd: document.getElementById('f_jd').value.trim(),
+    stage: document.getElementById('f_stage').value,
+    notes: document.getElementById('f_notes').value.trim(),
+    recname: document.getElementById('f_recname').value.trim(),
+    reccontact: document.getElementById('f_reccontact').value.trim(),
+    resume: document.getElementById('f_resume').value.trim(),
+    companynotes: document.getElementById('f_companynotes').value.trim(),
+  };
+  const saveBtn = document.querySelector('.modal-footer .btn-primary');
+  const prevLabel = saveBtn.textContent;
+  saveBtn.textContent = 'Saving...'; saveBtn.disabled = true;
+
+  try{
+    if(editingId){
+      if(cloudEnabled){
+        const { error } = await db.from('jobs').update(toDb(data)).eq('id', editingId);
+        if(error) throw error;
+      }
+      jobs = jobs.map(j => j.id===editingId ? {...j, ...data} : j);
+    } else {
+      if(cloudEnabled){
+        const { data: inserted, error } = await db.from('jobs').insert([toDb(data)]).select();
+        if(error) throw error;
+        jobs.push(fromDb(inserted[0]));
+      } else {
+        data.id = 'j_' + Date.now();
+        data.createdAt = new Date().toISOString();
+        jobs.push(data);
+      }
+    }
+    cacheLocally();
+    closeModal();
+    render();
+  }catch(e){
+    console.error(e);
+    alert('Save nahi ho paya — internet ya Supabase setup check karo. Data abhi is browser mein safe hai.');
+  }finally{
+    saveBtn.textContent = prevLabel; saveBtn.disabled = false;
+  }
+}
+
+async function deleteCurrent(){
+  if(!editingId) return;
+  if(!confirm('Yeh application delete karna hai?')) return;
+  try{
+    if(cloudEnabled){
+      const { error } = await db.from('jobs').delete().eq('id', editingId);
+      if(error) throw error;
+    }
+    jobs = jobs.filter(j => j.id !== editingId);
+    cacheLocally();
+    closeModal();
+    render();
+  }catch(e){
+    console.error(e);
+    alert('Delete nahi ho paya — internet ya Supabase setup check karo.');
+  }
+}
+
+async function moveStage(id, newStage){
+  const prevJobs = jobs;
+  jobs = jobs.map(j => j.id===id ? {...j, stage:newStage} : j);
+  cacheLocally();
+  render();
+  if(cloudEnabled){
+    try{
+      const { error } = await db.from('jobs').update({stage:newStage}).eq('id', id);
+      if(error) throw error;
+    }catch(e){
+      console.error(e);
+      jobs = prevJobs;
+      cacheLocally();
+      render();
+      alert('Stage move save nahi hua — internet check karo, wapas purani jagah kar diya.');
+    }
+  }
+}
+
+function renderRail(){
+  const rail = document.getElementById('rail');
+  rail.innerHTML = STAGES.map(s => {
+    const c = jobs.filter(j=>j.stage===s.key).length;
+    return `<div class="rail-node ${c>0?'active':''}">
+      <div class="rail-dot mono">${c}</div>
+      <div class="rail-label">${s.label}</div>
+    </div>`;
+  }).join('');
+}
+
+function matchesFilter(job){
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const src = document.getElementById('sourceFilter').value;
+  const matchQ = !q || job.company.toLowerCase().includes(q) || job.role.toLowerCase().includes(q);
+  const matchSrc = !src || job.source === src;
+  return matchQ && matchSrc;
+}
+
+function render(){
+  const board = document.getElementById('board');
+  const filtered = jobs.filter(matchesFilter);
+  board.innerHTML = STAGES.map(s => {
+    const items = filtered.filter(j => j.stage === s.key);
+    const cardsHtml = items.length ? items.map(j => cardHtml(j, s.color)).join('') :
+      `<div class="empty-col">${s.key==='saved' ? 'Yaha se shuru karo — "Add Application" dabao.' : 'Koi application yaha nahi hai.'}</div>`;
+    return `
+    <div class="column" style="border-top:4px solid ${s.color}; box-shadow:0 0 22px ${s.color}22;" ondragover="event.preventDefault()" ondrop="onDrop(event, '${s.key}')">
+      <div class="column-head" style="background:#000000;">
+        <div class="column-title" style="color:#FFFFFF">${s.label}</div>
+        <span class="count mono" style="background:${s.color}22; color:${s.color}">${items.length}</span>
+      </div>
+      <div class="card-list">${cardsHtml}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('totalCount').textContent = jobs.length;
+  const responded = jobs.filter(j => !['saved','applied'].includes(j.stage)).length;
+  const applied = jobs.filter(j => j.stage!=='saved').length;
+  document.getElementById('responseRate').textContent = applied ? Math.round(responded/applied*100)+'%' : '0%';
+  renderRail();
+}
+
+function cardHtml(j, color){
+  const da = daysAgo(j.date);
+  const isStale = j.stage==='applied' && da!==null && da>=15;
+  return `<div class="card" draggable="true" style="border-left-color:${color}"
+      ondragstart="dragId='${j.id}'; event.target.classList.add('dragging')"
+      ondragend="event.target.classList.remove('dragging')"
+      onclick="openModal(${JSON.stringify(j).replace(/"/g,'&quot;')})">
+    <div>
+      <div class="card-company">${escapeHtml(j.company)}</div>
+      <div class="card-role">${escapeHtml(j.role)}</div>
+      <div class="card-meta">
+        ${j.location ? `<span class="tag">${escapeHtml(j.location)}</span>`:''}
+        ${j.salary ? `<span class="tag">${escapeHtml(j.salary)}</span>`:''}
+        <span class="tag">${j.source}</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span class="${isStale?'stale':''}">${j.date ? formatDate(j.date):'no date'}${isStale?' · stale':''}</span>
+    </div>
+  </div>`;
+}
+
+function onDrop(e, stageKey){
+  if(dragId) moveStage(dragId, stageKey);
+  dragId = null;
+}
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function formatDate(d){ const dt = new Date(d); return dt.toLocaleDateString('en-IN', {day:'numeric', month:'short'}); }
+
+document.getElementById('overlay').addEventListener('click', e => { if(e.target.id==='overlay') closeModal(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// ===== PHASE 5: INSIGHTS DASHBOARD =====
+function openInsights(){
+  renderInsights();
+  document.getElementById('insightsOverlay').classList.add('show');
+}
+function closeInsights(){
+  document.getElementById('insightsOverlay').classList.remove('show');
+}
+
+function isoWeekLabel(dateStr){
+  const d = new Date(dateStr);
+  const onejan = new Date(d.getFullYear(),0,1);
+  const week = Math.ceil((((d - onejan) / 86400000) + onejan.getDay()+1)/7);
+  return d.getFullYear()+'-W'+week;
+}
+
+function renderInsights(){
+  const body = document.getElementById('insightsBody');
+  if(!jobs.length){
+    body.innerHTML = '<div class="empty-insight">Abhi koi application add nahi hui — kuch add karo, insights yaha dikhenge.</div>';
+    return;
+  }
+
+  const total = jobs.length;
+  const beyondSaved = jobs.filter(j=>j.stage!=='saved');
+  const responded = jobs.filter(j=> !['saved','applied'].includes(j.stage));
+  const interviewPlus = jobs.filter(j=> ['interview','offer'].includes(j.stage));
+  const responseRate = beyondSaved.length ? Math.round(responded.length/beyondSaved.length*100) : 0;
+  const interviewRate = beyondSaved.length ? Math.round(interviewPlus.length/beyondSaved.length*100) : 0;
+  const offers = jobs.filter(j=>j.stage==='offer').length;
+
+  // Weekly chart (last 8 weeks by date applied)
+  const withDates = jobs.filter(j=>j.date);
+  const weekCounts = {};
+  withDates.forEach(j=>{ const w = isoWeekLabel(j.date); weekCounts[w] = (weekCounts[w]||0)+1; });
+  const weekKeys = Object.keys(weekCounts).sort().slice(-8);
+  const maxCount = Math.max(1, ...weekKeys.map(k=>weekCounts[k]));
+
+  const chartHtml = weekKeys.length ? `<div class="chart-wrap">${weekKeys.map(k=>{
+    const h = Math.round((weekCounts[k]/maxCount)*90)+8;
+    return `<div class="chart-bar-col"><div class="chart-bar" style="height:${h}px"></div><div class="chart-label">${k.split('-W')[1]}</div></div>`;
+  }).join('')}</div>` : '<div class="empty-insight">Dates nahi mile applications mein.</div>';
+
+  // Source breakdown
+  const sourceCounts = {};
+  jobs.forEach(j=>{ const s = j.source||'Other'; sourceCounts[s] = (sourceCounts[s]||0)+1; });
+  const maxSource = Math.max(1, ...Object.values(sourceCounts));
+  const sourceHtml = Object.entries(sourceCounts).sort((a,b)=>b[1]-a[1]).map(([s,c])=>`
+    <div class="source-row">
+      <div class="source-name">${s}</div>
+      <div class="source-bar-track"><div class="source-bar-fill" style="width:${Math.round(c/maxSource*100)}%"></div></div>
+      <div class="source-count">${c}</div>
+    </div>`).join('');
+
+  // Stale applications (Applied stage, 15+ days)
+  const stale = jobs.filter(j=> j.stage==='applied' && j.date && daysAgo(j.date)>=15);
+  const staleHtml = stale.length ? stale.map(j=>`
+    <div class="stale-item"><span>${escapeHtml(j.company)} — ${escapeHtml(j.role)}</span><span>${daysAgo(j.date)}d ago</span></div>
+  `).join('') : '<div class="empty-insight">Koi stale application nahi — sab up to date hai 🎉</div>';
+
+  body.innerHTML = `
+    <div class="insight-stats">
+      <div class="insight-stat"><div class="num">${total}</div><div class="lbl">Total Applications</div></div>
+      <div class="insight-stat"><div class="num" style="color:#0D9488">${responseRate}%</div><div class="lbl">Response Rate</div></div>
+      <div class="insight-stat"><div class="num" style="color:#B45309">${interviewRate}%</div><div class="lbl">Interview Conversion</div></div>
+      <div class="insight-stat"><div class="num" style="color:#16A34A">${offers}</div><div class="lbl">Offers</div></div>
+    </div>
+
+    <div class="insight-section-title">Weekly Applications (last 8 weeks)</div>
+    ${chartHtml}
+
+    <div class="insight-section-title">By Source</div>
+    ${sourceHtml}
+
+    <div class="insight-section-title">Stale Applications (15+ days, no movement)</div>
+    ${staleHtml}
+  `;
+}
+
+// ===== PHASE 6: RESUME VERSION TRACKER =====
+function openResumes(){
+  renderResumes();
+  document.getElementById('resumesOverlay').classList.add('show');
+}
+function closeResumes(){
+  document.getElementById('resumesOverlay').classList.remove('show');
+}
+
+function renderResumes(){
+  const body = document.getElementById('resumesBody');
+  const withResume = jobs.filter(j=>j.resume);
+  if(!withResume.length){
+    body.innerHTML = '<div class="empty-insight">Abhi kisi job mein resume version nahi bhara — kisi bhi card ko kholke "Resume Version Used" field mein bharo (jaise Resume_v2_DataAnalyst.pdf), yaha automatically dikhega.</div>';
+    return;
+  }
+  const groups = {};
+  withResume.forEach(j=>{
+    if(!groups[j.resume]) groups[j.resume] = [];
+    groups[j.resume].push(j);
+  });
+  body.innerHTML = Object.entries(groups).map(([resume, jobList])=>`
+    <div style="margin-bottom:16px;">
+      <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; margin-bottom:6px;">📄 ${escapeHtml(resume)} <span style="color:var(--muted); font-weight:500; font-size:12px;">(${jobList.length} application${jobList.length>1?'s':''})</span></div>
+      ${jobList.map(j=>`<div class="prep-question">${escapeHtml(j.company)} — ${escapeHtml(j.role)} <span style="color:var(--muted);">· ${j.stage}</span></div>`).join('')}
+    </div>
+  `).join('');
+}
+
+// ===== PHASE 7: OFFER COMPARISON TOOL =====
+function openOffers(){
+  renderOffers();
+  document.getElementById('offersOverlay').classList.add('show');
+}
+function closeOffers(){
+  document.getElementById('offersOverlay').classList.remove('show');
+}
+
+function parseSalaryValue(str){
+  if(!str) return null;
+  const nums = (str.match(/[\d.]+/g)||[]).map(Number).filter(n=>!isNaN(n));
+  if(!nums.length) return null;
+  return nums.reduce((a,b)=>a+b,0)/nums.length;
+}
+
+function renderOffers(){
+  const body = document.getElementById('offersBody');
+  const offers = jobs.filter(j=>j.stage==='offer');
+  if(offers.length < 1){
+    body.innerHTML = '<div class="empty-insight">Abhi koi job "Offer" stage mein nahi hai. Jab kisi job ko Offer stage mein le jaoge, wo yaha compare karne ke liye aa jayegi.</div>';
+    return;
+  }
+  if(offers.length === 1){
+    body.innerHTML = '<div class="empty-insight">Sirf 1 offer hai abhi (' + escapeHtml(offers[0].company) + ') — compare karne ke liye kam se kam 2 offers chahiye. Jaise hi doosra offer aayega, yaha side-by-side dikhega.</div>';
+    return;
+  }
+
+  const salaryVals = offers.map(o=>parseSalaryValue(o.salary));
+  const maxSalary = Math.max(...salaryVals.filter(v=>v!==null), -Infinity);
+
+  const rows = [
+    { label:'Role', get:o=>escapeHtml(o.role) },
+    { label:'Location', get:o=>escapeHtml(o.location||'—') },
+    { label:'Salary', get:(o,i)=> {
+        const val = escapeHtml(o.salary||'—');
+        return (salaryVals[i]!==null && salaryVals[i]===maxSalary) ? `<span class="offer-best">${val} ★</span>` : val;
+      }
+    },
+    { label:'Source', get:o=>escapeHtml(o.source||'—') },
+    { label:'Recruiter', get:o=>escapeHtml(o.recname||'—') },
+    { label:'Notes', get:o=>escapeHtml(o.notes||'—') },
+  ];
+
+  let html = `<div class="offer-table" style="--offer-count:${offers.length}">`;
+  html += `<div class="offer-row"><div class="offer-cell label"></div>${offers.map(o=>`<div class="offer-cell header">${escapeHtml(o.company)}</div>`).join('')}</div>`;
+  rows.forEach(r=>{
+    html += `<div class="offer-row"><div class="offer-cell label">${r.label}</div>${offers.map((o,i)=>`<div class="offer-cell">${r.get(o,i)}</div>`).join('')}</div>`;
+  });
+  html += `</div>`;
+  if(maxSalary !== -Infinity){
+    html += `<div class="empty-insight" style="text-align:left; padding-top:12px;">★ = highest salary figure mentioned (approx, based on numbers written in the Salary field)</div>`;
+  }
+  body.innerHTML = html;
+}
+
+// ===== PHASE 8: CSV EXPORT =====
+function csvEscape(val){
+  if(val===null || val===undefined) return '';
+  const s = String(val);
+  if(s.includes(',') || s.includes('"') || s.includes('\n')){
+    return '"' + s.replace(/"/g,'""') + '"';
+  }
+  return s;
+}
+
+function exportCSV(){
+  if(!jobs.length){ alert('Abhi koi application add nahi hui — export karne ke liye pehle kuch jobs add karo.'); return; }
+  const headers = ['Company','Role','Location','Salary','Source','Date Applied','Stage','Recruiter Name','Recruiter Contact','Resume Version','Notes','Company Research Notes'];
+  const rows = jobs.map(j=>[
+    j.company, j.role, j.location, j.salary, j.source, j.date, j.stage,
+    j.recname, j.reccontact, j.resume, j.notes, j.companynotes
+  ].map(csvEscape).join(','));
+  const csv = headers.map(csvEscape).join(',') + '\n' + rows.join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'track-my-job-export-' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+
+// ===== PHASE 9: COMPANY DIRECTORY =====
+const COMPANY_LIST = [{"company": "TCS", "category": "Big IT/MNC", "url": "https://www.tcs.com/"}, {"company": "Infosys", "category": "Big IT/MNC", "url": "https://www.infosys.com/"}, {"company": "Wipro", "category": "Big IT/MNC", "url": "https://www.wipro.com/"}, {"company": "HCLTech", "category": "Big IT/MNC", "url": "https://www.hcltech.com/"}, {"company": "Accenture India", "category": "Big IT/MNC", "url": "https://www.accenture.com/in-en"}, {"company": "Cognizant India", "category": "Big IT/MNC", "url": "https://www.cognizant.com/in/en"}, {"company": "Genpact", "category": "Big IT/MNC", "url": "https://www.genpact.com/"}, {"company": "IBM India", "category": "Big IT/MNC", "url": "https://www.ibm.com/in-en"}, {"company": "Capgemini", "category": "Big IT/MNC", "url": "https://www.capgemini.com/in-en/"}, {"company": "Persistent Systems", "category": "Big IT/MNC", "url": "https://www.persistent.com/"}, {"company": "Mphasis", "category": "Big IT/MNC", "url": "https://www.mphasis.com/"}, {"company": "LTIMindtree", "category": "Big IT/MNC", "url": "https://www.ltimindtree.com/"}, {"company": "Coforge", "category": "Big IT/MNC", "url": "https://www.coforge.com/"}, {"company": "Hexaware", "category": "Big IT/MNC", "url": "https://www.hexaware.com/"}, {"company": "EXL Service", "category": "Big IT/MNC", "url": "https://www.exlservice.com/"}, {"company": "WNS Global Services", "category": "Big IT/MNC", "url": "https://www.wns.com/"}, {"company": "Deloitte India", "category": "Consulting/Analytics", "url": "https://www.deloitte.com/in/en.html"}, {"company": "KPMG India", "category": "Consulting/Analytics", "url": "https://kpmg.com/in/en.html"}, {"company": "EY India", "category": "Consulting/Analytics", "url": "https://www.ey.com/en_in"}, {"company": "PwC India", "category": "Consulting/Analytics", "url": "https://www.pwc.in/"}, {"company": "McKinsey & Company", "category": "Consulting/Analytics", "url": "https://www.mckinsey.com/"}, {"company": "Boston Consulting Group (BCG)", "category": "Consulting/Analytics", "url": "https://www.bcg.com/"}, {"company": "Bain & Company", "category": "Consulting/Analytics", "url": "https://www.bain.com/"}, {"company": "Capco", "category": "Consulting/Analytics", "url": "https://www.capco.com/"}, {"company": "ZS Associates", "category": "Consulting/Analytics", "url": "https://www.zs.com/careers"}, {"company": "Fractal Analytics", "category": "Consulting/Analytics", "url": "https://fractal.ai/"}, {"company": "LatentView Analytics", "category": "Consulting/Analytics", "url": "https://www.latentview.com/"}, {"company": "Tiger Analytics", "category": "Consulting/Analytics", "url": "https://www.tigeranalytics.com/careers/"}, {"company": "Tredence", "category": "Consulting/Analytics", "url": "https://www.tredence.com/careers"}, {"company": "SG Analytics", "category": "Consulting/Analytics", "url": "https://www.sganalytics.com/"}, {"company": "Mu Sigma", "category": "Consulting/Analytics", "url": "https://www.mu-sigma.com/"}, {"company": "Course5 Intelligence", "category": "Consulting/Analytics", "url": "https://www.course5i.com/careers/"}, {"company": "Infogain", "category": "Consulting/Analytics", "url": "https://www.infogain.com/"}, {"company": "Brillio", "category": "Consulting/Analytics", "url": "https://www.brillio.com/"}, {"company": "Cartesian Consulting", "category": "Consulting/Analytics", "url": "https://www.cartesianconsulting.com/careers/"}, {"company": "Ganit", "category": "Consulting/Analytics", "url": "https://www.ganitinc.com/careers/"}, {"company": "Gramener", "category": "Consulting/Analytics", "url": "https://gramener.com/"}, {"company": "Quantiphi", "category": "Consulting/Analytics", "url": "https://quantiphi.com/careers/"}, {"company": "Sigmoid", "category": "Consulting/Analytics", "url": "https://sigmoid.com/careers/"}, {"company": "Indium Software", "category": "Consulting/Analytics", "url": "https://www.indiumsoftware.com/careers/"}, {"company": "TheMathCompany", "category": "Consulting/Analytics", "url": "https://www.themathcompany.com/careers/"}, {"company": "Bridgei2i Analytics Solutions", "category": "Consulting/Analytics", "url": "https://bridgei2i.com/careers/"}, {"company": "Analyttica", "category": "Consulting/Analytics", "url": "https://www.analyttica.com/"}, {"company": "Analytics Vidhya", "category": "Consulting/Analytics", "url": "https://www.analyticsvidhya.com/careers/"}, {"company": "DataToBiz", "category": "Consulting/Analytics", "url": "https://www.datatobiz.com/careers/"}, {"company": "OneData Software Solutions", "category": "Consulting/Analytics", "url": "https://www.onedatasoftware.com/"}, {"company": "Heckyl Technologies", "category": "Consulting/Analytics", "url": "https://www.heckyl.com/"}, {"company": "Subex", "category": "Consulting/Analytics", "url": "https://www.subex.com/careers/"}, {"company": "Evalueserve", "category": "Consulting/Analytics", "url": "https://www.evalueserve.com/careers/"}, {"company": "Affine", "category": "Consulting/Analytics", "url": "https://www.affine.ai/careers"}, {"company": "Searce", "category": "Consulting/Analytics", "url": "https://searce.com/careers/"}, {"company": "Microsoft India", "category": "Global Product/Tech MNC", "url": "https://www.microsoft.com/en-in"}, {"company": "Google Cloud", "category": "Global Product/Tech MNC", "url": "https://cloud.google.com/"}, {"company": "Amazon Web Services India", "category": "Global Product/Tech MNC", "url": "https://aws.amazon.com/"}, {"company": "Amazon India", "category": "Global Product/Tech MNC", "url": "https://www.amazon.in/"}, {"company": "Adobe India", "category": "Global Product/Tech MNC", "url": "https://www.adobe.com/careers.html"}, {"company": "SAP Labs India", "category": "Global Product/Tech MNC", "url": "https://www.sap.com/india/about/careers.html"}, {"company": "Oracle India", "category": "Global Product/Tech MNC", "url": "https://www.oracle.com/in/careers/"}, {"company": "Salesforce India", "category": "Global Product/Tech MNC", "url": "https://www.salesforce.com/company/careers/"}, {"company": "Cisco India", "category": "Global Product/Tech MNC", "url": "https://www.cisco.com/c/en/us/about/careers.html"}, {"company": "Intel India", "category": "Global Product/Tech MNC", "url": "https://www.intel.com/content/www/us/en/jobs/jobs-at-intel.html"}, {"company": "Dell Technologies India", "category": "Global Product/Tech MNC", "url": "https://jobs.dell.com/"}, {"company": "VMware India", "category": "Global Product/Tech MNC", "url": "https://careers.vmware.com/"}, {"company": "ServiceNow India", "category": "Global Product/Tech MNC", "url": "https://careers.servicenow.com/"}, {"company": "Walmart Global Tech India", "category": "Global Product/Tech MNC", "url": "https://tech.walmart.com/careers/"}, {"company": "JPMorgan Chase India", "category": "Global Product/Tech MNC", "url": "https://careers.jpmorgan.com/"}, {"company": "Goldman Sachs India", "category": "Global Product/Tech MNC", "url": "https://www.goldmansachs.com/careers/"}, {"company": "American Express India", "category": "Global Product/Tech MNC", "url": "https://www.americanexpress.com/en-us/careers/"}, {"company": "Visa India", "category": "Global Product/Tech MNC", "url": "https://www.visa.co.in/careers.html"}, {"company": "Mastercard India", "category": "Global Product/Tech MNC", "url": "https://careers.mastercard.com/"}, {"company": "BrowserStack", "category": "Global Product/Tech MNC", "url": "https://www.browserstack.com/careers"}, {"company": "Freshworks", "category": "Global Product/Tech MNC", "url": "https://www.freshworks.com/company/careers/"}, {"company": "Zoho", "category": "Global Product/Tech MNC", "url": "https://www.zoho.com/careers/"}, {"company": "Postman", "category": "Global Product/Tech MNC", "url": "https://www.postman.com/company/careers/"}, {"company": "Chargebee", "category": "Global Product/Tech MNC", "url": "https://www.chargebee.com/careers/"}, {"company": "TigerGraph", "category": "Global Product/Tech MNC", "url": "https://www.tigergraph.com/"}, {"company": "HDFC Bank", "category": "Banking/Finance/Insurance", "url": "https://www.hdfcbank.com/personal/about-us/careers"}, {"company": "ICICI Bank", "category": "Banking/Finance/Insurance", "url": "https://www.icicibank.com/careers"}, {"company": "Axis Bank", "category": "Banking/Finance/Insurance", "url": "https://www.axisbank.com/careers"}, {"company": "State Bank of India (SBI)", "category": "Banking/Finance/Insurance", "url": "https://sbi.co.in/web/careers"}, {"company": "Kotak Mahindra Bank", "category": "Banking/Finance/Insurance", "url": "https://www.kotak.com/en/careers.html"}, {"company": "Yes Bank", "category": "Banking/Finance/Insurance", "url": "https://www.yesbank.in/careers"}, {"company": "IDFC First Bank", "category": "Banking/Finance/Insurance", "url": "https://www.idfcfirstbank.com/careers"}, {"company": "Bajaj Finserv", "category": "Banking/Finance/Insurance", "url": "https://www.bajajfinserv.in/careers"}, {"company": "HDFC Life", "category": "Banking/Finance/Insurance", "url": "https://www.hdfclife.com/careers"}, {"company": "Max Life Insurance", "category": "Banking/Finance/Insurance", "url": "https://www.maxlifeinsurance.com/careers"}, {"company": "ICICI Lombard", "category": "Banking/Finance/Insurance", "url": "https://www.icicilombard.com/careers"}, {"company": "Bajaj Allianz", "category": "Banking/Finance/Insurance", "url": "https://www.bajajallianz.com/careers.html"}, {"company": "Zerodha", "category": "Banking/Finance/Insurance", "url": "https://zerodha.com/careers/"}, {"company": "Jupiter Money", "category": "Banking/Finance/Insurance", "url": "https://jupiter.money/careers/"}, {"company": "Slice", "category": "Banking/Finance/Insurance", "url": "https://sliceit.com/careers"}, {"company": "PayU", "category": "Banking/Finance/Insurance", "url": "https://corporate.payu.com/careers/"}, {"company": "CoinDCX", "category": "Banking/Finance/Insurance", "url": "https://coindcx.com/careers"}, {"company": "MobiKwik", "category": "Banking/Finance/Insurance", "url": "https://www.mobikwik.com/careers"}, {"company": "Cashfree Payments", "category": "Banking/Finance/Insurance", "url": "https://www.cashfree.com/careers/"}, {"company": "Pine Labs", "category": "Banking/Finance/Insurance", "url": "https://www.pinelabs.com/careers"}, {"company": "PhonePe", "category": "Startup/Product (India)", "url": "https://www.phonepe.com/careers/"}, {"company": "Paytm", "category": "Startup/Product (India)", "url": "https://paytm.com/careers/"}, {"company": "Razorpay", "category": "Startup/Product (India)", "url": "https://razorpay.com/jobs/"}, {"company": "CRED", "category": "Startup/Product (India)", "url": "https://careers.cred.club/"}, {"company": "Groww", "category": "Startup/Product (India)", "url": "https://groww.in/careers"}, {"company": "BharatPe", "category": "Startup/Product (India)", "url": "https://www.bharatpe.com/careers"}, {"company": "Navi", "category": "Startup/Product (India)", "url": "https://navi.com/careers/"}, {"company": "Upstox", "category": "Startup/Product (India)", "url": "https://upstox.com/careers/"}, {"company": "Flipkart", "category": "Startup/Product (India)", "url": "https://www.flipkartcareers.com/"}, {"company": "Meesho", "category": "Startup/Product (India)", "url": "https://meesho.io/jobs"}, {"company": "Myntra", "category": "Startup/Product (India)", "url": "https://careers.myntra.com/"}, {"company": "Ajio", "category": "Startup/Product (India)", "url": "https://www.ajio.com/careers"}, {"company": "Snapdeal", "category": "Startup/Product (India)", "url": "https://www.snapdeal.com/careers"}, {"company": "Pepperfry", "category": "Startup/Product (India)", "url": "https://www.pepperfry.com/careers.html"}, {"company": "FirstCry", "category": "Startup/Product (India)", "url": "https://www.firstcry.com/careers"}, {"company": "boAt", "category": "Startup/Product (India)", "url": "https://www.boat-lifestyle.com/pages/careers"}, {"company": "Licious", "category": "Startup/Product (India)", "url": "https://www.licious.in/careers"}, {"company": "Zepto", "category": "Startup/Product (India)", "url": "https://www.zeptonow.com/careers"}, {"company": "Blinkit", "category": "Startup/Product (India)", "url": "https://blinkit.com/careers"}, {"company": "Swiggy", "category": "Startup/Product (India)", "url": "https://careers.swiggy.com/"}, {"company": "Zomato / Eternal", "category": "Startup/Product (India)", "url": "https://www.eternal.com/careers/"}, {"company": "Dream11", "category": "Startup/Product (India)", "url": "https://www.dreamsports.group/careers/"}, {"company": "Unacademy", "category": "Startup/Product (India)", "url": "https://unacademy.com/careers"}, {"company": "Physics Wallah", "category": "Startup/Product (India)", "url": "https://www.pw.live/careers"}, {"company": "Byju's", "category": "Startup/Product (India)", "url": "https://byjus.com/careers/"}, {"company": "upGrad", "category": "Startup/Product (India)", "url": "https://www.upgrad.com/careers/"}, {"company": "Vedantu", "category": "Startup/Product (India)", "url": "https://www.vedantu.com/careers"}, {"company": "Testbook", "category": "Startup/Product (India)", "url": "https://testbook.com/careers"}, {"company": "MakeMyTrip", "category": "Startup/Product (India)", "url": "https://careers.makemytrip.com/"}, {"company": "BookMyShow", "category": "Startup/Product (India)", "url": "https://in.bookmyshow.com/careers/"}, {"company": "Nykaa", "category": "Startup/Product (India)", "url": "https://www.nykaa.com/careers"}, {"company": "Urban Company", "category": "Startup/Product (India)", "url": "https://careers.urbancompany.com/"}, {"company": "Cars24", "category": "Startup/Product (India)", "url": "https://www.cars24.com/careers/"}, {"company": "OLX India", "category": "Startup/Product (India)", "url": "https://careers.olxgroup.com/"}, {"company": "ShareChat", "category": "Startup/Product (India)", "url": "https://sharechat.com/careers"}, {"company": "Dailyhunt", "category": "Startup/Product (India)", "url": "https://www.dailyhunt.in/careers"}, {"company": "Ola", "category": "Startup/Product (India)", "url": "https://www.olacabs.com/careers"}, {"company": "Ola Electric", "category": "Startup/Product (India)", "url": "https://olaelectric.com/careers"}, {"company": "Ather Energy", "category": "Startup/Product (India)", "url": "https://atherenergy.com/careers"}, {"company": "Uber India", "category": "Startup/Product (India)", "url": "https://www.uber.com/us/en/careers/"}, {"company": "Bounce", "category": "Startup/Product (India)", "url": "https://bounce.tech/careers/"}, {"company": "Porter", "category": "Startup/Product (India)", "url": "https://porter.in/careers"}, {"company": "Dunzo", "category": "Startup/Product (India)", "url": "https://www.dunzo.com/careers"}, {"company": "BigBasket", "category": "Startup/Product (India)", "url": "https://careers.bigbasket.com/"}, {"company": "1mg / Tata 1mg", "category": "Startup/Product (India)", "url": "https://www.1mg.com/jobs"}, {"company": "PharmEasy", "category": "Startup/Product (India)", "url": "https://pharmeasy.in/careers"}, {"company": "Practo", "category": "Startup/Product (India)", "url": "https://www.practo.com/company/careers"}, {"company": "Innovaccer", "category": "Startup/Product (India)", "url": "https://innovaccer.com/careers"}, {"company": "Cure.fit / Cult.fit", "category": "Startup/Product (India)", "url": "https://www.cult.fit/careers"}, {"company": "BlackBuck", "category": "Startup/Product (India)", "url": "https://www.blackbuck.com/careers"}, {"company": "Udaan", "category": "Startup/Product (India)", "url": "https://udaan.com/careers"}, {"company": "Moglix", "category": "Startup/Product (India)", "url": "https://www.moglix.com/careers"}, {"company": "Zetwerk", "category": "Startup/Product (India)", "url": "https://www.zetwerk.com/careers"}, {"company": "OfBusiness", "category": "Startup/Product (India)", "url": "https://www.ofbusiness.com/careers"}, {"company": "Infra.Market", "category": "Startup/Product (India)", "url": "https://infra.market/careers"}, {"company": "IndiaMART", "category": "Startup/Product (India)", "url": "https://careers.indiamart.com/"}, {"company": "Info Edge (Naukri.com)", "category": "Startup/Product (India)", "url": "https://www.infoedge.in/careers"}, {"company": "SigTuple", "category": "Startup/Product (India)", "url": "https://www.sigtuple.com/careers"}, {"company": "Mad Street Den", "category": "Startup/Product (India)", "url": "https://www.madstreetden.com/careers"}, {"company": "Observe.AI", "category": "Startup/Product (India)", "url": "https://observe.ai/careers/"}, {"company": "Yellow.ai", "category": "Startup/Product (India)", "url": "https://yellow.ai/careers/"}, {"company": "Uniphore", "category": "Startup/Product (India)", "url": "https://www.uniphore.com/careers/"}, {"company": "MoEngage", "category": "Startup/Product (India)", "url": "https://www.moengage.com/careers/"}, {"company": "CleverTap", "category": "Startup/Product (India)", "url": "https://clevertap.com/careers/"}, {"company": "Facets.cloud", "category": "Startup/Product (India)", "url": "https://www.facets.cloud/careers/"}, {"company": "Nference", "category": "Startup/Product (India)", "url": "https://nference.com/careers/"}, {"company": "Reliance Jio", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.jio.com/careers"}, {"company": "Bharti Airtel", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.airtel.in/about-bharti/careers"}, {"company": "Vodafone Idea", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.myvi.in/careers"}, {"company": "Hindustan Unilever (HUL)", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.hul.co.in/careers/"}, {"company": "ITC Limited", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.itcportal.com/careers/"}, {"company": "Nestle India", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.nestle.in/jobs"}, {"company": "Tata Motors", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.tatamotors.com/careers/"}, {"company": "Mahindra & Mahindra", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.mahindra.com/careers"}, {"company": "Maruti Suzuki", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.marutisuzuki.com/corporate/careers"}, {"company": "Titan Company", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.titancompany.in/careers"}, {"company": "Reliance Retail", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.relianceretail.com/careers.html"}, {"company": "DMart (Avenue Supermarts)", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.dmartindia.com/careers"}, {"company": "Reliance Industries", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.ril.com/careers"}, {"company": "Tata Consumer Products", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.tataconsumer.com/careers"}, {"company": "Asian Paints", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.asianpaints.com/careers.html"}, {"company": "Larsen & Toubro (L&T)", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.larsentoubro.com/corporate/careers/"}, {"company": "Apollo Hospitals", "category": "Telecom/FMCG/Auto/Retail", "url": "https://www.apollohospitals.com/careers/"}, {"company": "Sun Pharma", "category": "Telecom/FMCG/Auto/Retail", "url": "https://sunpharma.com/careers/"}, {"company": "LinkedIn Jobs", "category": "Job Search Website", "url": "https://www.linkedin.com/jobs/search/?keywords=%22Data%20Analyst%22%20OR%20%22Business%20Analyst%22%20OR%20%22Reporting%20Analyst%22%20OR%20%22MIS%20Analyst%22&location=India&sortBy=DD"}, {"company": "Naukri", "category": "Job Search Website", "url": "https://www.naukri.com/data-analyst-jobs?k=data%20analyst%2C%20business%20analyst%2C%20reporting%20analyst%2C%20mis%20analyst"}, {"company": "Indeed India", "category": "Job Search Website", "url": "https://in.indeed.com/jobs?q=Data+Analyst+OR+Business+Analyst+OR+Reporting+Analyst+OR+MIS+Analyst&sort=date"}, {"company": "Foundit India", "category": "Job Search Website", "url": "https://www.foundit.in/"}, {"company": "Glassdoor India", "category": "Job Search Website", "url": "https://www.glassdoor.co.in/Job/index.htm"}, {"company": "Apna", "category": "Job Search Website", "url": "https://apna.co/"}, {"company": "Internshala", "category": "Job Search Website", "url": "https://internshala.com/"}, {"company": "Cutshort", "category": "Job Search Website", "url": "https://cutshort.io/"}, {"company": "Wellfound", "category": "Job Search Website", "url": "https://wellfound.com/jobs"}, {"company": "Hirist", "category": "Job Search Website", "url": "https://www.hirist.tech/"}, {"company": "DataJobs", "category": "Job Search Website", "url": "https://datajobs.com/"}, {"company": "DataAnalyst.com", "category": "Job Search Website", "url": "https://www.dataanalyst.com/"}, {"company": "Upwork", "category": "Job Search Website", "url": "https://www.upwork.com/"}, {"company": "Fiverr", "category": "Job Search Website", "url": "https://www.fiverr.com/"}];
+let activeCompanyCategory = 'All';
+
+function openCompanies(){
+  activeCompanyCategory = 'All';
+  document.getElementById('companySearch').value = '';
+  renderCompanyTabs();
+  renderCompanies();
+  document.getElementById('companiesOverlay').classList.add('show');
+}
+function closeCompanies(){
+  document.getElementById('companiesOverlay').classList.remove('show');
+}
+
+function renderCompanyTabs(){
+  const cats = ['All', ...new Set(COMPANY_LIST.map(c=>c.category))];
+  document.getElementById('companyTabs').innerHTML = cats.map(c=>
+    `<button class="cat-tab ${c===activeCompanyCategory?'active':''}" onclick="setCompanyCategory(this.dataset.cat)" data-cat="${c.replace(/"/g,'&quot;')}">${c}</button>`
+  ).join('');
+}
+
+function setCompanyCategory(cat){
+  activeCompanyCategory = cat;
+  renderCompanyTabs();
+  renderCompanies();
+}
+
+async function addJobQuick(data){
+  try{
+    if(cloudEnabled){
+      const { data: inserted, error } = await db.from('jobs').insert([toDb(data)]).select();
+      if(error) throw error;
+      jobs.push(fromDb(inserted[0]));
+    } else {
+      data.id = 'j_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+      data.createdAt = new Date().toISOString();
+      jobs.push(data);
+    }
+    cacheLocally();
+  }catch(e){
+    console.error(e);
+    alert('Add nahi ho paya: ' + escapeHtml(data.company) + ' — internet check karo.');
+  }
+}
+
+async function addCompanyToBoard(company, url, btn){
+  if(btn){ btn.disabled = true; btn.textContent = 'Adding...'; }
+  try{
+    await addJobQuick({ company, role:'', location:'', salary:'', source:'Company Site', date:new Date().toISOString().slice(0,10), jd:url, stage:'saved', notes:'', recname:'', reccontact:'', resume:'', companynotes:'' });
+    render();
+    if(btn){ btn.textContent = 'Added ✓'; }
+  }catch(e){
+    console.error('addCompanyToBoard failed:', e);
+    if(btn){ btn.disabled = false; btn.textContent = '+ Add'; }
+    alert('Add nahi ho paya, dobara try karo.');
+  }
+}
+
+async function addAllInCategory(){
+  const list = filteredCompanies();
+  const existingNames = new Set(jobs.map(j=>j.company.toLowerCase()));
+  const toAdd = list.filter(c => !existingNames.has(c.company.toLowerCase()));
+  if(!toAdd.length){ alert('Yeh sab already tracker mein hai.'); return; }
+  if(!confirm(toAdd.length + ' companies ko Saved column mein add karu?')) return;
+  const bulkBtn = document.querySelector('.bulk-add-btn');
+  if(bulkBtn){ bulkBtn.disabled = true; bulkBtn.textContent = 'Adding ' + toAdd.length + ' companies...'; }
+  let failCount = 0;
+  for(const c of toAdd){
+    try{
+      await addJobQuick({ company:c.company, role:'', location:'', salary:'', source:'Company Site', date:new Date().toISOString().slice(0,10), jd:c.url, stage:'saved', notes:'', recname:'', reccontact:'', resume:'', companynotes:'' });
+    }catch(e){
+      console.error('Failed to add', c.company, e);
+      failCount++;
+    }
+  }
+  render();
+  renderCompanies();
+  if(failCount>0) alert(failCount + ' companies add nahi ho payi, baaki ho gayi. Internet check karke dobara try karo.');
+}
+
+function filteredCompanies(){
+  const q = document.getElementById('companySearch').value.toLowerCase();
+  return COMPANY_LIST.filter(c=>{
+    const matchCat = activeCompanyCategory==='All' || c.category===activeCompanyCategory;
+    const matchQ = !q || c.company.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+}
+
+function renderCompanies(){
+  const list = filteredCompanies();
+  const existingNames = new Set(jobs.map(j=>j.company.toLowerCase()));
+  const isJobSite = activeCompanyCategory === 'Job Search Website';
+
+  const bulkDiv = document.getElementById('companyBulkAdd');
+  bulkDiv.innerHTML = (!isJobSite && activeCompanyCategory!=='All') ?
+    `<button class="bulk-add-btn" onclick="addAllInCategory()">+ Add All in ${escapeHtml(activeCompanyCategory)} (${list.length})</button>` : '';
+
+  document.getElementById('companyList').innerHTML = list.map((c, i)=>{
+    const already = existingNames.has(c.company.toLowerCase());
+    const addBtnHtml = c.category==='Job Search Website' ? '' :
+      `<button class="addbtn" ${already?'disabled':''} onclick="addCompanyToBoard(COMPANY_LIST_FILTERED[${i}].company, COMPANY_LIST_FILTERED[${i}].url, this)">${already?'Added ✓':'+ Add'}</button>`;
+    return `<div class="company-row">
+      <div><div class="cname">${escapeHtml(c.company)}</div><div class="ccat">${escapeHtml(c.category)}</div></div>
+      <a class="visit" href="${c.url}" target="_blank" rel="noopener">Visit ↗</a>
+      ${addBtnHtml}
+    </div>`;
+  }).join('') || '<div class="empty-insight">Koi company nahi mili is search ke liye.</div>';
+  window.COMPANY_LIST_FILTERED = list;
+}
+
+// ===== MORE TOOLS MODAL =====
+function openMoreTools(){
+  document.getElementById('moreToolsOverlay').classList.add('show');
+}
+function closeMoreTools(){
+  document.getElementById('moreToolsOverlay').classList.remove('show');
+}
+
+function openJobPortals(){
+  closeMoreTools();
+  openCompanies();
+  setCompanyCategory('Job Search Website');
+}
+
+// ===== SAFETY NET: catch unexpected errors so the app never goes silently blank =====
+window.addEventListener('error', function(e){
+  console.error('Unexpected error caught:', e.error || e.message);
+  try{
+    const banner = document.getElementById('cloudBanner');
+    if(banner){
+      banner.textContent = 'Kuch unexpected error aaya, par tumhara data safe hai. Page refresh karke try karo. (Details: browser console)';
+      banner.className = 'cloud-banner show warn';
+    }
+  }catch(_){}
+  return true; // prevent default browser crash dialogs; app keeps running
+});
+window.addEventListener('unhandledrejection', function(e){
+  console.error('Unhandled promise rejection caught:', e.reason);
+});
+
+// ===== PHASE 10: AUTHENTICATION =====
+let currentUser = null;
+let authMode = 'login';
+
+function setAuthMode(mode){
+  authMode = mode;
+  document.getElementById('tabLogin').classList.toggle('active', mode==='login');
+  document.getElementById('tabSignup').classList.toggle('active', mode==='signup');
+  document.getElementById('authSubmitBtn').textContent = mode==='login' ? 'Login' : 'Sign Up';
+  document.getElementById('authModeSub').textContent = mode==='login' ? 'Login to see your saved applications' : 'Create a free account to start tracking';
+  document.getElementById('authFooter').innerHTML = mode==='login'
+    ? 'New here? <span onclick="setAuthMode(\'signup\')">Create an account</span>'
+    : 'Already have an account? <span onclick="setAuthMode(\'login\')">Login</span>';
+  document.getElementById('authError').textContent = '';
+  document.getElementById('fullNameField').style.display = mode==='signup' ? 'flex' : 'none';
+}
+
+async function submitAuth(){
+  const fullName = document.getElementById('authFullName').value.trim();
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const errorDiv = document.getElementById('authError');
+  const btn = document.getElementById('authSubmitBtn');
+  errorDiv.textContent = '';
+
+  if(!email || !password){ errorDiv.textContent = 'Email aur password dono bharo.'; return; }
+  if(authMode==='signup' && !fullName){ errorDiv.textContent = 'Apna naam bhi likho.'; return; }
+  if(password.length < 6){ errorDiv.textContent = 'Password kam se kam 6 characters ka hona chahiye.'; return; }
+  if(!cloudEnabled){ errorDiv.textContent = 'Cloud connect nahi hai — login abhi possible nahi.'; return; }
+
+  const prevText = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Please wait...';
+
+  try{
+    if(authMode === 'login'){
+      const { data, error } = await db.auth.signInWithPassword({ email, password });
+      if(error) throw error;
+    } else {
+      const { data, error } = await db.auth.signUp({ email, password, options: { data: { full_name: fullName } } });
+      if(error) throw error;
+      if(data.user && !data.session){
+        errorDiv.style.color = '#16A34A';
+        errorDiv.textContent = 'Account ban gaya! Agar email confirmation on hai to inbox check karo, warna seedha login karo.';
+      }
+    }
+  }catch(e){
+    errorDiv.style.color = '#E11D48';
+    errorDiv.textContent = e.message || 'Kuch galat ho gaya, dobara try karo.';
+  }finally{
+    btn.disabled = false; btn.textContent = prevText;
+  }
+}
+
+async function logoutUser(){
+  if(!confirm('Logout karna hai?')) return;
+  try{
+    if(cloudEnabled) await db.auth.signOut();
+  }catch(e){ console.error(e); }
+  currentUser = null;
+  jobs = [];
+  document.getElementById('appContent').style.display = 'none';
+  document.getElementById('authScreen').style.display = 'flex';
+  document.getElementById('authEmail').value = '';
+  document.getElementById('authPassword').value = '';
+  document.getElementById('authFullName').value = '';
+}
+
+async function initAuth(){
+  if(!cloudEnabled){
+    // No cloud configured — fall back to showing the app directly (old behavior)
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('appContent').style.display = 'block';
+    loadJobs();
+    return;
+  }
+
+  db.auth.onAuthStateChange((event, session)=>{
+    if(session && session.user){
+      currentUser = session.user;
+      document.getElementById('authScreen').style.display = 'none';
+      document.getElementById('appContent').style.display = 'block';
+      loadJobs();
+    } else {
+      currentUser = null;
+      document.getElementById('appContent').style.display = 'none';
+      document.getElementById('authScreen').style.display = 'flex';
+    }
+  });
+
+  const { data: { session } } = await db.auth.getSession();
+  if(session && session.user){
+    currentUser = session.user;
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('appContent').style.display = 'block';
+    loadJobs();
+  }
+}
+
+initAuth();
+</script>
+</body>
+</html>
