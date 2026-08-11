@@ -138,12 +138,6 @@
   }
   .auth-title{ font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:800; margin:0; text-align:center; }
   .auth-sub{ font-size:12.5px; color:var(--muted); margin:0 0 6px; text-align:center; }
-  .auth-tabs{ display:flex; width:100%; background:var(--surface-3); border-radius:10px; padding:4px; gap:4px; }
-  .auth-tab{
-    flex:1; text-align:center; padding:8px; border-radius:8px; font-size:13px; font-weight:600;
-    cursor:pointer; color:var(--muted);
-  }
-  .auth-tab.active{ background:#FFFFFF; color:#0B0E14; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
   #authScreen .field{ width:100%; }
   #authScreen input{
     width:100%; background:var(--surface-2); border:1px solid var(--line); border-radius:9px;
@@ -151,6 +145,8 @@
   }
   #authScreen input:focus{ border-color:var(--cyan); }
   .auth-error{ color:#E11D48; font-size:12.5px; text-align:center; min-height:14px; }
+  .auth-hint{ font-size:11px; color:var(--muted); margin-top:5px; line-height:1.4; }
+  .auth-good-msg{ font-size:12px; color:#16A34A; font-weight:600; margin-top:6px; min-height:14px; }
   .auth-footer{ font-size:12.5px; color:var(--muted); text-align:center; }
   .auth-footer span{ color:#0369A1; font-weight:600; cursor:pointer; }
 
@@ -374,35 +370,28 @@
 </head>
 <body>
 
-<!-- ===== AUTH SCREEN (shown before login) ===== -->
+<!-- ===== ACCESS SCREEN (password-only gate) ===== -->
 <div id="authScreen">
   <div class="auth-card">
     <div class="auth-avatar" id="authAvatar"></div>
     <h1 class="auth-title">Welcome To "Track My Job"</h1>
-    <p class="auth-sub" id="authModeSub">Login to see your saved applications</p>
+    <p class="auth-sub">Enter your name and a password to open your tracker</p>
 
-    <div class="auth-tabs">
-      <div class="auth-tab active" id="tabLogin" onclick="setAuthMode('login')">Login</div>
-      <div class="auth-tab" id="tabSignup" onclick="setAuthMode('signup')">Sign Up</div>
-    </div>
-
-    <div class="field" id="fullNameField" style="display:none;">
+    <div class="field">
       <label>Full Name</label>
       <input type="text" id="authFullName" placeholder="Your name">
     </div>
     <div class="field">
-      <label>Email</label>
-      <input type="email" id="authEmail" placeholder="you@example.com">
-    </div>
-    <div class="field">
       <label>Password</label>
-      <input type="password" id="authPassword" placeholder="At least 6 characters">
+      <input type="password" id="authPassword" placeholder="At least 8 characters" oninput="checkPasswordStrength()">
+      <div class="auth-hint">Must be at least 8 characters, with one uppercase letter, one number, and one symbol (like @ . ? / ;)</div>
+      <div id="passwordGoodMsg" class="auth-good-msg"></div>
     </div>
 
     <div id="authError" class="auth-error"></div>
 
-    <button class="btn btn-primary" id="authSubmitBtn" style="width:100%; padding:12px;" onclick="submitAuth()">Login</button>
-    <div class="auth-footer" id="authFooter">New here? <span onclick="setAuthMode('signup')">Create an account</span></div>
+    <button class="btn btn-primary" id="authSubmitBtn" style="width:100%; padding:12px;" onclick="submitAuth()">Open My Tracker</button>
+    <div class="auth-footer">This password is the only way to open your saved data again. If you use a new password, you will start with a fresh, empty tracker.</div>
   </div>
 </div>
 
@@ -632,7 +621,7 @@
       <div class="mt-item" onclick="closeMoreTools(); openJobPortals();">🔗 Job Portals</div>
       <div class="mt-item" onclick="closeMoreTools(); openCompanies();">🏢 Companies</div>
       <div class="mt-item" onclick="closeMoreTools(); exportCSV();">⬇️ Export CSV</div>
-      <div class="mt-item" onclick="closeMoreTools(); logoutUser();" style="color:#E11D48;">🚪 Logout</div>
+      <div class="mt-item" onclick="closeMoreTools(); logoutUser();" style="color:#E11D48;">🔑 Switch Password</div>
     </div>
   </div>
 </div>
@@ -850,17 +839,12 @@ function showBanner(msg, type){
 }
 
 let jobs = [];
-try{
-  jobs = JSON.parse(localStorage.getItem('pipeline_jobs_cache') || '[]');
-}catch(e){
-  console.warn('Local cache read failed, starting fresh:', e);
-  jobs = [];
-}
 let editingId = null;
 let dragId = null;
 
 function cacheLocally(){
-  try{ localStorage.setItem('pipeline_jobs_cache', JSON.stringify(jobs)); }
+  if(!accessKey) return;
+  try{ localStorage.setItem('pipeline_jobs_cache_' + accessKey, JSON.stringify(jobs)); }
   catch(e){ console.warn('Local cache save failed (storage full or disabled):', e); }
 }
 
@@ -871,7 +855,7 @@ function toDb(j){
     stage:j.stage, notes:j.notes||null,
     recruiter_name:j.recname||null, recruiter_contact:j.reccontact||null,
     resume_version:j.resume||null, company_notes:j.companynotes||null,
-    user_id: currentUser ? currentUser.id : null
+    user_id: null, access_key: accessKey
   };
 }
 function fromDb(r){
@@ -889,14 +873,14 @@ async function loadJobs(){
     return;
   }
   try{
-    const { data, error } = await db.from('jobs').select('*').order('created_at', {ascending:true});
+    const { data, error } = await db.from('jobs').select('*').eq('access_key', accessKey).order('created_at', {ascending:true});
     if(error) throw error;
     jobs = data.map(fromDb);
     cacheLocally();
     document.getElementById('cloudBanner').classList.remove('show');
   }catch(e){
     console.warn('Cloud load failed, showing offline cache:', e?.message || e);
-    jobs = JSON.parse(localStorage.getItem('pipeline_jobs_cache') || '[]');
+    jobs = JSON.parse(localStorage.getItem('pipeline_jobs_cache_' + accessKey) || '[]');
     showBanner('Cloud se connect nahi ho paya: ' + (e?.message || 'unknown error') + ' — offline cache dikha rahe hai.', 'warn');
   }
   render();
@@ -1441,101 +1425,100 @@ window.addEventListener('unhandledrejection', function(e){
   console.error('Unhandled promise rejection caught:', e.reason);
 });
 
-// ===== PHASE 10: AUTHENTICATION =====
-let currentUser = null;
-let authMode = 'login';
+// ===== PASSWORD-ONLY ACCESS GATE =====
+let accessKey = null;   // a scrambled version of the password, used to find your data
+let fullName = '';
 
-function setAuthMode(mode){
-  authMode = mode;
-  document.getElementById('tabLogin').classList.toggle('active', mode==='login');
-  document.getElementById('tabSignup').classList.toggle('active', mode==='signup');
-  document.getElementById('authSubmitBtn').textContent = mode==='login' ? 'Login' : 'Sign Up';
-  document.getElementById('authModeSub').textContent = mode==='login' ? 'Login to see your saved applications' : 'Create a free account to start tracking';
-  document.getElementById('authFooter').innerHTML = mode==='login'
-    ? 'New here? <span onclick="setAuthMode(\'signup\')">Create an account</span>'
-    : 'Already have an account? <span onclick="setAuthMode(\'login\')">Login</span>';
-  document.getElementById('authError').textContent = '';
-  document.getElementById('fullNameField').style.display = mode==='signup' ? 'flex' : 'none';
+// Turns the password into a fixed scrambled code (like a fingerprint).
+// The same password always produces the same code, but the code cannot be turned back into the password.
+async function hashPassword(password){
+  const enc = new TextEncoder().encode(password);
+  const digest = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+function passwordMeetsRules(password){
+  return password.length >= 8
+    && /[A-Z]/.test(password)
+    && /[0-9]/.test(password)
+    && /[^A-Za-z0-9]/.test(password);
+}
+
+function checkPasswordStrength(){
+  const password = document.getElementById('authPassword').value;
+  const msg = document.getElementById('passwordGoodMsg');
+  if(passwordMeetsRules(password)){
+    msg.textContent = 'Good! Please remember this exact password. You will need to type it again to see this same data next time.';
+  } else {
+    msg.textContent = '';
+  }
 }
 
 async function submitAuth(){
-  const fullName = document.getElementById('authFullName').value.trim();
-  const email = document.getElementById('authEmail').value.trim();
+  const nameInput = document.getElementById('authFullName').value.trim();
   const password = document.getElementById('authPassword').value;
   const errorDiv = document.getElementById('authError');
   const btn = document.getElementById('authSubmitBtn');
   errorDiv.textContent = '';
 
-  if(!email || !password){ errorDiv.textContent = 'Email aur password dono bharo.'; return; }
-  if(authMode==='signup' && !fullName){ errorDiv.textContent = 'Apna naam bhi likho.'; return; }
-  if(password.length < 6){ errorDiv.textContent = 'Password kam se kam 6 characters ka hona chahiye.'; return; }
-  if(!cloudEnabled){ errorDiv.textContent = 'Cloud connect nahi hai — login abhi possible nahi.'; return; }
+  if(!nameInput){ errorDiv.textContent = 'Please enter your name.'; return; }
+  if(!passwordMeetsRules(password)){
+    errorDiv.textContent = 'Password must be at least 8 characters, with one uppercase letter, one number, and one symbol.';
+    return;
+  }
+  if(!cloudEnabled){ errorDiv.textContent = 'Cloud is not connected — cannot open tracker right now.'; return; }
 
   const prevText = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Please wait...';
+  btn.disabled = true; btn.textContent = 'Opening...';
 
   try{
-    if(authMode === 'login'){
-      const { data, error } = await db.auth.signInWithPassword({ email, password });
-      if(error) throw error;
-    } else {
-      const { data, error } = await db.auth.signUp({ email, password, options: { data: { full_name: fullName } } });
-      if(error) throw error;
-      if(data.user && !data.session){
-        errorDiv.style.color = '#16A34A';
-        errorDiv.textContent = 'Account ban gaya! Agar email confirmation on hai to inbox check karo, warna seedha login karo.';
-      }
-    }
+    const key = await hashPassword(password);
+    accessKey = key;
+    fullName = nameInput;
+    localStorage.setItem('tmj_access_key', key);
+    localStorage.setItem('tmj_full_name', fullName);
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('appContent').style.display = 'block';
+    loadJobs();
   }catch(e){
-    errorDiv.style.color = '#E11D48';
-    errorDiv.textContent = e.message || 'Kuch galat ho gaya, dobara try karo.';
+    errorDiv.textContent = 'Something went wrong, please try again.';
+    console.error(e);
   }finally{
     btn.disabled = false; btn.textContent = prevText;
   }
 }
 
-async function logoutUser(){
-  if(!confirm('Logout karna hai?')) return;
-  try{
-    if(cloudEnabled) await db.auth.signOut();
-  }catch(e){ console.error(e); }
-  currentUser = null;
+function logoutUser(){
+  if(!confirm('Switch to a different password? You will need to re-enter a password to see any data.')) return;
+  accessKey = null;
   jobs = [];
+  localStorage.removeItem('tmj_access_key');
+  localStorage.removeItem('tmj_full_name');
   document.getElementById('appContent').style.display = 'none';
   document.getElementById('authScreen').style.display = 'flex';
-  document.getElementById('authEmail').value = '';
-  document.getElementById('authPassword').value = '';
   document.getElementById('authFullName').value = '';
+  document.getElementById('authPassword').value = '';
+  document.getElementById('passwordGoodMsg').textContent = '';
 }
 
-async function initAuth(){
+function initAuth(){
   if(!cloudEnabled){
-    // No cloud configured — fall back to showing the app directly (old behavior)
     document.getElementById('authScreen').style.display = 'none';
     document.getElementById('appContent').style.display = 'block';
     loadJobs();
     return;
   }
-
-  db.auth.onAuthStateChange((event, session)=>{
-    if(session && session.user){
-      currentUser = session.user;
-      document.getElementById('authScreen').style.display = 'none';
-      document.getElementById('appContent').style.display = 'block';
-      loadJobs();
-    } else {
-      currentUser = null;
-      document.getElementById('appContent').style.display = 'none';
-      document.getElementById('authScreen').style.display = 'flex';
-    }
-  });
-
-  const { data: { session } } = await db.auth.getSession();
-  if(session && session.user){
-    currentUser = session.user;
+  const savedKey = localStorage.getItem('tmj_access_key');
+  const savedName = localStorage.getItem('tmj_full_name');
+  if(savedKey){
+    accessKey = savedKey;
+    fullName = savedName || '';
     document.getElementById('authScreen').style.display = 'none';
     document.getElementById('appContent').style.display = 'block';
     loadJobs();
+  } else {
+    document.getElementById('authScreen').style.display = 'flex';
+    document.getElementById('appContent').style.display = 'none';
   }
 }
 
